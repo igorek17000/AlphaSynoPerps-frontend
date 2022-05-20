@@ -1,6 +1,6 @@
 import { HStack } from '@chakra-ui/react';
 import React from 'react';
-import { ConnectWalletButton, ColorModeButton } from './buttons';
+import { ConnectWalletButton } from './buttons';
 
 export const NavBar = (props) => {
   return (

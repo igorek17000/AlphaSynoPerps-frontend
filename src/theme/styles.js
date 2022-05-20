@@ -1,23 +1,26 @@
 import { mode } from '@chakra-ui/theme-tools';
 
+// #1A202C = gray.800
+// #4A5568 = gray.600
+// #E2E8F0 = gray.200
+
 export const styles = {
   global: (props) => ({
     body: {
       fontFamily: '"Rajdhani", sans-serif',
       color: 'gray.300',
-      background: 'rgb(26,32,44)',
-      bgGradient:
-        'linear-gradient(180deg, rgba(26,32,44,1) 0%, rgba(74,85,104,1) 86%)',
+      // bgGradient: 'linear-gradient(180deg, #1A202C 0%, #4A5568 100%)',
+      bgColor: 'gray.900',
       lineHeight: 'base',
       minHeight: '100vh',
     },
 
     '*::placeholder': {
-      color: mode('#20265D', '#e0e0e0')(props),
+      color: 'gray.200',
       fontSize: 'sm',
     },
     '*, *::before, &::after': {
-      borderColor: mode('gray.200', 'whiteAlpha.300')(props),
+      borderColor: 'gray.200',
       wordWrap: 'break-word',
     },
     '::-webkit-scrollbar': {
@@ -25,18 +28,11 @@ export const styles = {
     },
     '::-webkit-scrollbar-track': {
       background: 'none',
-      border: '1px solid white',
       borderRadius: '30px',
     },
     '::-webkit-scrollbar-thumb': {
-      background: mode(
-        'rgba(32, 38, 93, 0.5);',
-        'rgba(255, 255, 255, 0.5)'
-      )(props),
+      background: 'gray.900',
       borderRadius: '30px',
-    },
-    '::-webkit-scrollbar-thumb:hover': {
-      background: mode('#20265D', 'white')(props),
     },
   }),
 };

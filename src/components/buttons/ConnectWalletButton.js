@@ -7,7 +7,7 @@ export const ConnectWalletButton = (props) => {
   const { account } = useWeb3React();
   const { connectWallet } = useWallet();
   return account ? (
-    <Box fontWeight={600}>
+    <Box fontWeight="semibold">
       {account.substring(0, 6)}...
       {account.substr(account.length - 4)}
     </Box>

@@ -7,7 +7,6 @@ const useWallet = () => {
   const ethereum = window.ethereum;
 
   const connect = async (connector) => {
-    console.log('hiii');
     try {
       if (!(window.web3 || ethereum)) {
         console.log('Metamsk not installed');

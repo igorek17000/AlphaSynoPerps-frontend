@@ -8,7 +8,6 @@ import theme from './theme';
 import { getLibrary } from './utils';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-console.log(theme.config.initialColorMode);
 root.render(
   <>
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />

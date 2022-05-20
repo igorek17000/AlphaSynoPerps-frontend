@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, VStack, useColorMode } from '@chakra-ui/react';
+import { Box, Grid, GridItem, VStack } from '@chakra-ui/react';
 import { NavBar } from './components';
 import { AdvCandleStickChart } from './components/advanceCharts';
 
@@ -66,24 +66,86 @@ const colors = {
 
 function App() {
   return (
-    <VStack className="App" alignItems="center" px="0.5rem">
+    <VStack className="App" alignItems="center" p="2rem" pt="0">
       <NavBar />
       <Grid
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(12, 1fr)"
+        templateRows={{
+          base: 'repeat(7, 1fr)',
+          lg: 'repeat(4, 1fr)',
+          '2xl': 'repeat(2, 1fr)',
+        }}
+        templateColumns={{
+          base: 'repeat(4, 1fr)',
+          lg: 'repeat(8, 1fr)',
+          '2xl': 'repeat(12, 1fr)',
+        }}
         gap={4}
         w="100%"
+        maxH="100%"
       >
+        {/* asset */}
         <GridItem
-          bgColor={'RGBA(0, 0, 0, 0.1)'}
+          bgColor={'gray.800'}
           py="1rem"
-          px="0.1rem"
-          borderRadius="1rem"
+          px="1rem"
           rowSpan={1}
-          colSpan={{ base: 12, lg: 6, '2xl': 7 }}
+          colSpan={{ base: 4, lg: 6, '2xl': 2 }}
+        >
+          assets
+        </GridItem>
+        {/* graph */}
+        <GridItem
+          bgColor={'gray.800'}
+          py="1rem"
+          px="0.5rem"
+          rowSpan={1}
+          colSpan={{ base: 4, lg: 6, '2xl': 4 }}
         >
           <AdvCandleStickChart colors={colors} data={candlestickSeriesData} />
         </GridItem>
+        {/* available options */}
+        <GridItem
+          bgColor={'gray.800'}
+          py="1rem"
+          px="1rem"
+          rowSpan={1}
+          colSpan={{ base: 4, lg: 6, '2xl': 6 }}
+        >
+          account status
+        </GridItem>
+        {/* available options */}
+        <GridItem
+          bgColor={'gray.800'}
+          py="1rem"
+          px="1rem"
+          rowSpan={1}
+          colSpan={{ base: 4, lg: 6, '2xl': 6 }}
+        >
+          {' '}
+          buy sell options
+        </GridItem>
+
+        {/* buy sell window */}
+        <GridItem
+          bgColor={'gray.800'}
+          py="1rem"
+          px="1rem"
+          rowSpan={1}
+          colSpan={{ base: 4, lg: 6, '2xl': 3 }}
+        >
+          buy sell orders
+        </GridItem>
+        {/* you postions */}
+        <GridItem
+          bgColor={'gray.800'}
+          py="1rem"
+          px="1rem"
+          rowSpan={1}
+          colSpan={{ base: 4, lg: 6, '2xl': 3 }}
+        >
+          your positions
+        </GridItem>
+        {/* Account status */}
 
         <Box></Box>
       </Grid>
