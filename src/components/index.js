@@ -1,5 +1,4 @@
-export * from './advanceCharts';
-export * from './simpleCharts';
+export * from './charts';
 export * from './NavBar';
 export * from './buttons';
 export * from './table';
