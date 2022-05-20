@@ -6,6 +6,10 @@ import { colors } from './foundations';
 const theme = extendTheme({
   colors,
   styles,
+  config: {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+  },
 });
 
 export default theme;

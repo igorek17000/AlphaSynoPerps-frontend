@@ -1,7 +1,7 @@
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef } from 'react';
 
-export const CandleStickChart = (props) => {
+export const SimpleCandleStickChart = (props) => {
   const chartContainerRef = useRef();
   const { data, colors } = props;
   const {

@@ -2,7 +2,7 @@ import { createChart, ColorType } from 'lightweight-charts';
 import { Box } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 
-export const CandleStickChart = (props) => {
+export const AdvCandleStickChart = (props) => {
   const chartContainerRef = useRef();
   const { data, colors } = props;
   const {
@@ -27,11 +27,13 @@ export const CandleStickChart = (props) => {
         textColor,
       },
       grid: {
-        vertLines: { color: 'rgb(0,0,0,0.1)' },
-        horzLines: { color: 'rgb(0,0,0,0.1)' },
+        vertLines: { color: 'RGBA(0, 0, 0, 0.2)' },
+        horzLines: { color: 'RGBA(0, 0, 0, 0.2)' },
       },
       width: chartContainerRef.current.clientWidth,
       height: 300,
+      rightPriceScale: { borderVisible: false },
+      timeScale: { borderVisible: false },
     });
     chart.timeScale().fitContent();
 

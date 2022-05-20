@@ -4,8 +4,10 @@ export const styles = {
   global: (props) => ({
     body: {
       fontFamily: '"Rajdhani", sans-serif',
-      color: mode('#2026D', '#ffffff')(props),
-      bgColor: mode('#ffffff', '#2026D')(props),
+      color: 'gray.300',
+      background: 'rgb(26,32,44)',
+      bgGradient:
+        'linear-gradient(180deg, rgba(26,32,44,1) 0%, rgba(74,85,104,1) 86%)',
       lineHeight: 'base',
       minHeight: '100vh',
     },

@@ -1,7 +1,7 @@
 import { createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef } from 'react';
 
-export const AreaChart = (props) => {
+export const SimpleAreaChart = (props) => {
   const chartContainerRef = useRef();
   const { data, colors } = props;
   const {

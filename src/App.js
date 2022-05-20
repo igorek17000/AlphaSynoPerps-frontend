@@ -1,8 +1,6 @@
-import './App.css';
-// import useWallet from './hooks/useWallet';
-// import { useWeb3React } from '@web3-react/core';
-import { CandleStickChart } from './components/advanceCharts';
-import { VStack, Box, useColorMode, Button } from '@chakra-ui/react';
+import { Box, Grid, GridItem, VStack, useColorMode } from '@chakra-ui/react';
+import { NavBar } from './components';
+import { AdvCandleStickChart } from './components/advanceCharts';
 
 const candlestickSeriesData = [
   {
@@ -60,27 +58,36 @@ const candlestickSeriesData = [
 ];
 
 const colors = {
-  backgroundColor: 'rgb(255,255,255,0)',
+  backgroundColor: 'rgba(255,255,255,0)',
   textColor: 'white',
   areaTopColor: '#2962FF',
   areaBottomColor: 'rgba(41, 98, 255, 0.0)',
 };
 
 function App() {
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <div className="App">
-      <Box bgColor={'rgba(255,255,255,0.1)'} p="0.5rem">
-        <CandleStickChart colors={colors} data={candlestickSeriesData} />
-        <Button
-          onClick={() => {
-            toggleColorMode();
-          }}
+    <VStack className="App" alignItems="center" px="0.5rem">
+      <NavBar />
+      <Grid
+        templateRows="repeat(2, 1fr)"
+        templateColumns="repeat(12, 1fr)"
+        gap={4}
+        w="100%"
+      >
+        <GridItem
+          bgColor={'RGBA(0, 0, 0, 0.1)'}
+          py="1rem"
+          px="0.1rem"
+          borderRadius="1rem"
+          rowSpan={1}
+          colSpan={{ base: 12, lg: 6, '2xl': 7 }}
         >
-          Color Mode
-        </Button>
-      </Box>
-    </div>
+          <AdvCandleStickChart colors={colors} data={candlestickSeriesData} />
+        </GridItem>
+
+        <Box></Box>
+      </Grid>
+    </VStack>
   );
 }
 
