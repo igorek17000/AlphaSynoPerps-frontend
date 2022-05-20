@@ -7,7 +7,7 @@ import * as components from './components';
 const theme = extendTheme({
   colors,
   styles,
-  components,
+  // components,
   config: {
     initialColorMode: 'dark',
     useSystemColorMode: false,

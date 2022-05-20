@@ -1,5 +1,5 @@
-import { Box, Grid, GridItem, VStack } from '@chakra-ui/react';
-import { NavBar } from './components';
+import { Box, VStack } from '@chakra-ui/react';
+import { LayoutGrid, LayoutGridItem, NavBar, StatTable } from './components';
 import { AdvCandleStickChart } from './components/advanceCharts';
 
 const candlestickSeriesData = [
@@ -68,11 +68,11 @@ function App() {
   return (
     <VStack className="App" alignItems="center" p="2rem" pt="0">
       <NavBar />
-      <Grid
+      <LayoutGrid
         templateRows={{
           base: 'repeat(7, 1fr)',
           lg: 'repeat(4, 1fr)',
-          '2xl': 'repeat(2, 1fr)',
+          '2xl': 'repeat(3, 1fr)',
         }}
         templateColumns={{
           base: 'repeat(4, 1fr)',
@@ -82,73 +82,82 @@ function App() {
         gap={4}
         w="100%"
         maxH="100%"
+        flex="1"
       >
         {/* asset */}
-        <GridItem
-          bgColor={'gray.800'}
-          py="1rem"
-          px="1rem"
+        <LayoutGridItem
           rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 2 }}
+          colSpan={{ base: 4, lg: 6, '2xl': 3 }}
+          maxH="50vh"
         >
-          assets
-        </GridItem>
+          <StatTable
+            headingRow={['PAIR', 'PRICE', 'CHANGE']}
+            tableRows={[
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+            ]}
+            activeRow={3}
+          />
+        </LayoutGridItem>
+
         {/* graph */}
-        <GridItem
-          bgColor={'gray.800'}
-          py="1rem"
-          px="0.5rem"
-          rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 4 }}
-        >
+        <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
           <AdvCandleStickChart colors={colors} data={candlestickSeriesData} />
-        </GridItem>
-        {/* available options */}
-        <GridItem
-          bgColor={'gray.800'}
-          py="1rem"
-          px="1rem"
-          rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 6 }}
-        >
-          account status
-        </GridItem>
-        {/* available options */}
-        <GridItem
-          bgColor={'gray.800'}
-          py="1rem"
-          px="1rem"
-          rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 6 }}
-        >
-          {' '}
-          buy sell options
-        </GridItem>
+        </LayoutGridItem>
 
         {/* buy sell window */}
-        <GridItem
-          bgColor={'gray.800'}
-          py="1rem"
-          px="1rem"
+        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+          buy sell window
+        </LayoutGridItem>
+
+        {/* account status */}
+        <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+          account status
+        </LayoutGridItem>
+
+        {/* available options */}
+        <LayoutGridItem
           rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 3 }}
+          colSpan={{ base: 4, lg: 6, '2xl': 6 }}
+          maxH="50vh"
         >
-          buy sell orders
-        </GridItem>
+          <StatTable
+            headingRow={['STRIKE', 'BID', 'ASK', 'IV-A', 'IV-B']}
+            tableRows={[
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+              ['$66', '$0.05', '$0.25', '135%', '98.3%'],
+            ]}
+            activeRow={3}
+            size="md"
+          />
+        </LayoutGridItem>
+
         {/* you postions */}
-        <GridItem
-          bgColor={'gray.800'}
-          py="1rem"
-          px="1rem"
-          rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 3 }}
-        >
-          your positions
-        </GridItem>
-        {/* Account status */}
+        <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+          {/* <StatTable /> */}
+        </LayoutGridItem>
 
         <Box></Box>
-      </Grid>
+      </LayoutGrid>
     </VStack>
   );
 }
