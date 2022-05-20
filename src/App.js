@@ -18,7 +18,7 @@ function App() {
         templateRows={{
           base: 'repeat(7, 1fr)',
           lg: 'repeat(4, 1fr)',
-          '2xl': 'repeat(3, 1fr)',
+          '2xl': 'repeat(4, 1fr)',
         }}
         templateColumns={{
           base: 'repeat(4, 1fr)',
@@ -27,15 +27,11 @@ function App() {
         }}
         gap={4}
         w="100%"
-        maxH="100%"
+        maxH="100vh"
         flex="1"
       >
         {/* asset */}
-        <LayoutGridItem
-          rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 3 }}
-          maxH="50vh"
-        >
+        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
           <StatTable
             headingRow={['PAIR', 'PRICE', 'CHANGE']}
             tableRows={[
@@ -59,26 +55,22 @@ function App() {
         </LayoutGridItem>
 
         {/* graph */}
-        <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
+        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
           <CandleStickChart colors={colors} data={candlestickSeriesData} />
         </LayoutGridItem>
 
         {/* buy sell window */}
-        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+        <LayoutGridItem rowSpan={3} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
           buy sell window
         </LayoutGridItem>
 
         {/* account status */}
-        <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
           account status
         </LayoutGridItem>
 
         {/* available options */}
-        <LayoutGridItem
-          rowSpan={1}
-          colSpan={{ base: 4, lg: 6, '2xl': 6 }}
-          maxH="50vh"
-        >
+        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
           <StatTable
             headingRow={['STRIKE', 'BID', 'ASK', 'IV-A', 'IV-B']}
             tableRows={[
@@ -97,12 +89,19 @@ function App() {
           />
         </LayoutGridItem>
 
-        {/* you postions */}
+        {/* trades */}
         <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
-          {/* <StatTable /> */}
+          <StatTable
+            headingRow={['PAIR', 'PRICE', 'CHANGE']}
+            tableRows={[
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+              ['ETH/USDC', '1963.75', '100%'],
+            ]}
+            activeRow={3}
+          />
         </LayoutGridItem>
-
-        <Box></Box>
       </LayoutGrid>
     </VStack>
   );

@@ -21,14 +21,15 @@ export const StatTable = ({
       <Table variant="simple" size="sm" {...props}>
         <Thead position={'sticky'} top="0" bgColor="gray.800">
           <Tr w="100%">
-            {headingRow.map((heading) => (
-              <Th>{heading}</Th>
+            {headingRow.map((heading, ind) => (
+              <Th key={`${ind}`}>{heading}</Th>
             ))}
           </Tr>
         </Thead>
         <Tbody>
           {tableRows.map((row, ind) => (
             <Tr
+              key={`${ind}`}
               _hover={
                 !(activeRow === ind) && {
                   bgColor: 'gray.600',
@@ -40,8 +41,8 @@ export const StatTable = ({
                 onRowClick(row, ind);
               }}
             >
-              {row.map((cell) => (
-                <Td>{cell}</Td>
+              {row.map((cell, ind) => (
+                <Td key={`${ind}`}>{cell}</Td>
               ))}
             </Tr>
           ))}
