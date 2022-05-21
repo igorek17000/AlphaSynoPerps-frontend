@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 export const CandleStickChart = (props) => {
   const chartContainerRef = useRef();
-  const { data, colors } = props;
+  const { data, colors, ...rest } = props;
   const {
     backgroundColor,
     lineColor,
@@ -31,7 +31,7 @@ export const CandleStickChart = (props) => {
         horzLines: { color: 'RGBA(0, 0, 0, 0.2)' },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 300,
+      height: chartContainerRef.current.clientHeight,
       rightPriceScale: { borderVisible: false },
       timeScale: { borderVisible: false },
     });
@@ -76,5 +76,5 @@ export const CandleStickChart = (props) => {
     areaBottomColor,
   ]);
 
-  return <Box ref={chartContainerRef} />;
+  return <Box ref={chartContainerRef} {...rest} />;
 };

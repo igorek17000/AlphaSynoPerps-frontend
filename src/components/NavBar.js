@@ -4,7 +4,7 @@ import { ConnectWalletButton } from './buttons';
 
 export const NavBar = (props) => {
   return (
-    <HStack h={'4rem'} justifyContent="flex-end" w="100%">
+    <HStack h={'2.5rem'} justifyContent="flex-end" w="100%">
       <ConnectWalletButton />
       {/* <ColorModeButton /> */}
     </HStack>

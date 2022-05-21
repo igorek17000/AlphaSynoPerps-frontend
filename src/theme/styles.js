@@ -9,16 +9,15 @@ export const styles = {
     body: {
       fontFamily: '"Rajdhani", sans-serif',
       color: 'gray.300',
-      // bgGradient: 'linear-gradient(180deg, #1A202C 0%, #4A5568 100%)',
       bgColor: 'gray.900',
       lineHeight: 'base',
       minHeight: '100vh',
     },
 
-    '*::placeholder': {
-      color: 'gray.200',
-      fontSize: 'sm',
-    },
+    // '*::placeholder': {
+    //   color: 'gray.200',
+    //   fontSize: 'sm',
+    // },
     '*, *::before, &::after': {
       borderColor: 'gray.200',
       wordWrap: 'break-word',
@@ -29,9 +28,10 @@ export const styles = {
     '::-webkit-scrollbar-track': {
       background: 'none',
       borderRadius: '30px',
+      pl: '20px',
     },
     '::-webkit-scrollbar-thumb': {
-      background: 'gray.900',
+      background: 'gray.700',
       borderRadius: '30px',
     },
   }),
