@@ -7,12 +7,13 @@ export const ConnectWalletButton = (props) => {
   const { account } = useWeb3React();
   const { connectWallet } = useWallet();
   return account ? (
-    <Box fontWeight="semibold" px={4}>
+    <Button variant="ghost" leftIcon={<Icon as={BiWallet} />}>
       {account.substring(0, 6)}...
       {account.substr(account.length - 4)}
-    </Box>
+    </Button>
   ) : (
     <Button
+      variant="border"
       leftIcon={<Icon as={BiWallet} />}
       onClick={() => {
         connectWallet();

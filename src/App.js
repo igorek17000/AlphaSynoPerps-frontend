@@ -1,24 +1,32 @@
-import { Box, VStack } from '@chakra-ui/react';
 import {
+  Button,
+  ButtonGroup,
+  VStack,
+  Input,
+  useColorMode,
+} from '@chakra-ui/react';
+import {
+  GridItemHeading,
   LayoutGrid,
   LayoutGridItem,
   NavBar,
   StatTable,
-  GridItemHeading,
 } from './components';
 import { CandleStickChart } from './components/charts';
 import { candlestickSeriesData } from './constants/chartMockData';
 
 const colors = {
   backgroundColor: 'rgba(255,255,255,0)',
-  textColor: 'white',
+  textColor: '#CBD5E0',
   areaTopColor: '#2962FF',
   areaBottomColor: 'rgba(41, 98, 255, 0.0)',
 };
 
 function App() {
+  const { colorMode } = useColorMode();
+  console.log(colorMode);
   return (
-    <VStack className="App" alignItems="center" h="100vh" p={2}>
+    <VStack className="App" alignItems="center" h="100vh" minH="800px" p={2}>
       <NavBar />
       <LayoutGrid
         templateRows={{
@@ -36,7 +44,7 @@ function App() {
         w="100%"
         position="relative"
       >
-        {/* asset */}
+        {/* Asset */}
         <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
           <VStack h="100%" alignItems="stretch">
             <GridItemHeading>Assets</GridItemHeading>
@@ -48,7 +56,7 @@ function App() {
           </VStack>
         </LayoutGridItem>
 
-        {/* graph */}
+        {/* Price Chart */}
         <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
           <VStack h="100%" w="100%" alignItems="stretch">
             <GridItemHeading>Price Chart</GridItemHeading>
@@ -60,47 +68,34 @@ function App() {
           </VStack>
         </LayoutGridItem>
 
+        {/* Add/Withdraw Collateral */}
         <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
-          <GridItemHeading>Collateral</GridItemHeading>
+          <VStack h="100%" w="100%" alignItems="stretch">
+            <GridItemHeading>Collateral</GridItemHeading>
+            <Input placeholder="Select Asset" />
+            <Input placeholder="Enter Amount" />
+            <ButtonGroup w="100%">
+              <Button w="100%" size="sm">
+                Deposit
+              </Button>
+              <Button w="100%" size="sm">
+                Withdraw
+              </Button>
+            </ButtonGroup>
+          </VStack>
         </LayoutGridItem>
 
-        {/* buy sell window */}
+        {/* Buy/Sell window */}
         <LayoutGridItem rowSpan={3} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
-          <GridItemHeading>Buy/Sell window</GridItemHeading>
+          <GridItemHeading>Buy/Sell Window</GridItemHeading>
         </LayoutGridItem>
 
-        {/* account status */}
+        {/* Trades */}
         <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
           <GridItemHeading>Trades</GridItemHeading>
         </LayoutGridItem>
 
-        {/* available options */}
-        {/* <LayoutGridItem
-          rowSpan={2}
-          colSpan={{ base: 4, lg: 6, '2xl': 6 }}
-          overflowY="scroll"
-        >
-          <VStack h="100%" alignItems="stretch">
-            <StatTable
-              headingRow={['STRIKE', 'BID', 'ASK', 'IV-A', 'IV-B']}
-              tableRows={[
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-                ['$66', '$0.05', '$0.25', '135%', '98.3%'],
-              ]}
-              activeRow={3}
-              size="md"
-            />
-          </VStack>
-        </LayoutGridItem> */}
-
-        {/* trades */}
+        {/* Account Positions */}
         <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
           <GridItemHeading>Positions</GridItemHeading>
         </LayoutGridItem>

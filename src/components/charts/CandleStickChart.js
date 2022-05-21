@@ -25,6 +25,7 @@ export const CandleStickChart = (props) => {
           color: backgroundColor,
         },
         textColor,
+        fontFamily: '"Rajdhani", sans-serif',
       },
       grid: {
         vertLines: { color: 'RGBA(0, 0, 0, 0.2)' },
