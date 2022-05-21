@@ -6,6 +6,17 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react';
+
+import {
   GridItemHeading,
   LayoutGrid,
   LayoutGridItem,
@@ -70,9 +81,20 @@ function App() {
 
         {/* Add/Withdraw Collateral */}
         <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
-          <VStack h="100%" w="100%" alignItems="stretch">
-            <GridItemHeading>Collateral</GridItemHeading>
-            <Input placeholder="Select Asset" />
+          <VStack h="100%" w="100%" alignItems="center">
+            <GridItemHeading w="100%">Collateral</GridItemHeading>
+            <Menu placement="bottom">
+              <MenuButton size="sm" as={Button} w="66%">
+                Select Asset
+              </MenuButton>
+              <MenuList>
+                <MenuItem>Download</MenuItem>
+                <MenuItem>Create a Copy</MenuItem>
+                <MenuItem>Mark as Draft</MenuItem>
+                <MenuItem>Delete</MenuItem>
+                <MenuItem>Attend a Workshop</MenuItem>
+              </MenuList>
+            </Menu>
             <Input placeholder="Enter Amount" />
             <ButtonGroup w="100%">
               <Button w="100%" size="sm">

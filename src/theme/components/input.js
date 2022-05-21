@@ -25,6 +25,7 @@ export const Input = {
     outline: {
       field: {
         borderRadius: 'none',
+        fontWeight: 'semibold',
         _focus: {
           boxShadow: 'none',
         },
