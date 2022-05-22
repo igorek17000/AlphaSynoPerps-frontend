@@ -59,10 +59,10 @@ export const BuySellWindow = (props) => {
     const isShort = selectedMethod === 'sell';
     const amount = parseEther(optionQuantity);
     const index = 1;
+    const assetIdx = 1;
     const underlyingAsset = assetAddresses[index];
     const expiryTimestamp = parseEther(`${selectedExpiryTime}`);
     const strikePrice = parseEther(`${selectedStrike}`);
-    const assetIdx = 1;
     let vaultContract;
     let vaultAddress;
 

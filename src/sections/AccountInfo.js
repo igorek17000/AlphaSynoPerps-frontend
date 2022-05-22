@@ -73,14 +73,14 @@ export const AccountInfo = (props) => {
           {selectedAssetIndex ? assets[selectedAssetIndex] : 'Select Asset'}
         </MenuButton>
         <MenuList>
-          {[0, 1, 2].map((index) => (
+          {assets.map((asset, index) => (
             <MenuItem
               key={index}
               onClick={() => {
                 setSelectedAssetIndex(index);
               }}
             >
-              {assets[index]}
+              {asset}
             </MenuItem>
           ))}
         </MenuList>

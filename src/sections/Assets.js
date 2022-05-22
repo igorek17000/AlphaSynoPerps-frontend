@@ -32,7 +32,6 @@ export const Assets = (props) => {
           return res;
         });
         const priceFeedRes = await Promise.all(priceFeedReqs);
-        console.log(priceFeedRes);
         const priceFeedsFormatted = priceFeedRes.map((feed, ind) => {
           const { data } = feed;
           const rate = data.RAW[tickerAssets[ind]].USDC.PRICE;
