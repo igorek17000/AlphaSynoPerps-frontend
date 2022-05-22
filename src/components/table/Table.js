@@ -38,7 +38,7 @@ export const StatTable = ({
               }
               bgColor={activeRow === ind && 'gray.700'}
               onClick={() => {
-                onRowClick(row, ind);
+                onRowClick && onRowClick(row, ind);
               }}
             >
               {row.map((cell, ind) => (

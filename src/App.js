@@ -6,16 +6,7 @@ import {
   NavBar,
   StatTable,
 } from './components';
-import { CandleStickChart } from './components';
-import { candlestickSeriesData } from './constants/chartMockData';
-import { AccountInfo, BuySellWindow } from './sections';
-
-const colors = {
-  backgroundColor: 'rgba(255,255,255,0)',
-  textColor: '#CBD5E0',
-  areaTopColor: '#2962FF',
-  areaBottomColor: 'rgba(41, 98, 255, 0.0)',
-};
+import { AccountInfo, BuySellWindow, PriceChart } from './sections';
 
 function App() {
   const { colorMode } = useColorMode();
@@ -49,14 +40,7 @@ function App() {
 
         {/* Price Chart */}
         <LayoutGridItem rowSpan={2} colSpan={{ xl: 6 }}>
-          <VStack h="100%" w="100%" alignItems="stretch">
-            <GridItemHeading>Price Chart</GridItemHeading>
-            <CandleStickChart
-              flex="1"
-              colors={colors}
-              data={candlestickSeriesData}
-            />
-          </VStack>
+          <PriceChart />
         </LayoutGridItem>
 
         {/* Account Info*/}

@@ -2,8 +2,7 @@ import { createChart, ColorType } from 'lightweight-charts';
 import { Box } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 
-export const CandleStickChart = (props) => {
-  const chartContainerRef = useRef();
+export const CandleStickChart = React.forwardRef((props, ref) => {
   const { data, colors, ...rest } = props;
   const {
     backgroundColor,
@@ -15,10 +14,10 @@ export const CandleStickChart = (props) => {
 
   useEffect(() => {
     const handleResize = () => {
-      chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+      chart.applyOptions({ width: ref.current.clientWidth });
     };
 
-    const chart = createChart(chartContainerRef.current, {
+    const chart = createChart(ref.current, {
       layout: {
         background: {
           type: ColorType.Solid,
@@ -31,35 +30,21 @@ export const CandleStickChart = (props) => {
         vertLines: { color: 'RGBA(0, 0, 0, 0.2)' },
         horzLines: { color: 'RGBA(0, 0, 0, 0.2)' },
       },
-      width: chartContainerRef.current.clientWidth,
-      height: chartContainerRef.current.clientHeight,
+      width: ref.current.clientWidth,
+      height: ref.current.clientHeight,
       rightPriceScale: { borderVisible: false },
-      timeScale: { borderVisible: false },
+      timeScale: {
+        borderVisible: false,
+        tickMarkFormatter: (time) => {
+          const date = new Date(time * 1000);
+          return date.getHours() + ':' + date.getMinutes();
+        },
+      },
     });
     chart.timeScale().fitContent();
 
     const candlestickSeries = chart.addCandlestickSeries();
     candlestickSeries.setData(data);
-
-    setTimeout(() => {
-      candlestickSeries.update({
-        time: '2018-12-31',
-        open: 109.87,
-        high: 114.69,
-        low: 85.66,
-        close: 112,
-      });
-    }, 4000);
-
-    setTimeout(() => {
-      candlestickSeries.update({
-        time: '2019-01-01',
-        open: 112,
-        high: 112,
-        low: 100,
-        close: 101,
-      });
-    }, 6000);
 
     window.addEventListener('resize', handleResize);
 
@@ -72,10 +57,11 @@ export const CandleStickChart = (props) => {
     data,
     backgroundColor,
     lineColor,
+    ref,
     textColor,
     areaTopColor,
     areaBottomColor,
   ]);
 
-  return <Box ref={chartContainerRef} {...rest} />;
-};
+  return <Box ref={ref} {...rest} />;
+});

@@ -41,12 +41,13 @@ export const BuySellWindow = (props) => {
     mt: '2',
     ml: '-2.5',
     fontSize: 'sm',
+    fontWeight: 'semibold',
   };
 
   return (
-    <VStack h="100%" w="100%" alignItems="center">
+    <VStack h="100%" w="100%" alignItems="stretch">
       {/* Contract Switcher */}
-      <ButtonGroup w="100%" mb={4} spacing="0">
+      <ButtonGroup mb={4} spacing="0">
         <Button
           w="100%"
           size="sm"
@@ -71,8 +72,8 @@ export const BuySellWindow = (props) => {
 
       {/* Options */}
       {selectedContract === 'options' && (
-        <VStack w="100%">
-          <HStack w="100%" justifyContent="space-between" mb={4}>
+        <VStack alignItems="stretch">
+          <HStack justifyContent="space-between" mb={4}>
             <ButtonGroup w="45%" spacing="0">
               <Button
                 w="100%"
@@ -119,7 +120,7 @@ export const BuySellWindow = (props) => {
             </ButtonGroup>
           </HStack>
 
-          <VStack w="100%" spacing={4}>
+          <VStack spacing={4}>
             <Menu placement="bottom">
               <MenuButton
                 size="sm"
@@ -164,7 +165,7 @@ export const BuySellWindow = (props) => {
 
       {/* Perpetuals */}
       {selectedContract === 'perps' && (
-        <VStack w="100%">
+        <VStack alignItems="stretch">
           <ButtonGroup w="45%" spacing="0" alignSelf="flex-start" mb={4}>
             <Button
               w="100%"
@@ -188,13 +189,13 @@ export const BuySellWindow = (props) => {
             </Button>
           </ButtonGroup>
 
-          <VStack w="100%" spacing={4}>
+          <VStack alignItems="stretch" spacing={4}>
             <Input
               placeholder="Enter Amount"
               value={optionQuantity}
               onChange={handleOptionQuantityChange}
             />
-            <Box w="100%">
+            <Box>
               <Box fontSize="sm" alignSelf="flex-start" fontWeight="semibold">
                 Leverage
               </Box>
@@ -211,6 +212,9 @@ export const BuySellWindow = (props) => {
                   onChange={(val) => setSliderValue(val)}
                   min={1}
                 >
+                  {/* <SliderMark value={1} {...labelStyles}>
+                    1x
+                  </SliderMark> */}
                   <SliderMark value={25} {...labelStyles}>
                     25x
                   </SliderMark>
@@ -220,10 +224,13 @@ export const BuySellWindow = (props) => {
                   <SliderMark value={75} {...labelStyles}>
                     75x
                   </SliderMark>
+                  {/* <SliderMark value={100} {...labelStyles}>
+                    100x
+                  </SliderMark> */}
                   <SliderMark
                     value={sliderValue}
                     textAlign="center"
-                    bg="gray.500"
+                    bg="gray.600"
                     borderRadius="9999px"
                     fontSize="sm"
                     fontWeight="bold"
@@ -246,7 +253,6 @@ export const BuySellWindow = (props) => {
               // color={selectedMethod === 'sell' ? 'red.500' : 'green.500'}
               fontWeight="bold"
               variant={selectedMethod === 'sell' ? 'red' : 'green'}
-              w="100%"
               leftIcon={<Icon fontSize="20px" as={GoGear} />}
             >
               Run risk engine

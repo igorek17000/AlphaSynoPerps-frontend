@@ -5,7 +5,7 @@ export const LayoutGridItem = ({ children, ...props }) => (
     borderColor="gray.700"
     bgColor={'gray.800'}
     borderRadius={4}
-    p={6}
+    p={4}
     {...props}
   >
     {children}
