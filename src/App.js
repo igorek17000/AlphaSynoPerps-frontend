@@ -25,14 +25,10 @@ function App() {
       <NavBar />
       <LayoutGrid
         templateRows={{
-          base: 'repeat(7, 1fr)',
-          lg: 'repeat(4, 1fr)',
-          '2xl': 'repeat(4, 1fr)',
+          xl: 'repeat(4, 1fr)',
         }}
         templateColumns={{
-          base: 'repeat(4, 1fr)',
-          lg: 'repeat(8, 1fr)',
-          '2xl': 'repeat(12, 1fr)',
+          xl: 'repeat(12, 1fr)',
         }}
         gap={2}
         height="100%"
@@ -40,7 +36,7 @@ function App() {
         position="relative"
       >
         {/* Asset */}
-        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+        <LayoutGridItem rowSpan={2} colSpan={{ xl: 3 }}>
           <VStack h="100%" alignItems="stretch">
             <GridItemHeading>Assets</GridItemHeading>
             <StatTable
@@ -52,7 +48,7 @@ function App() {
         </LayoutGridItem>
 
         {/* Price Chart */}
-        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
+        <LayoutGridItem rowSpan={2} colSpan={{ xl: 6 }}>
           <VStack h="100%" w="100%" alignItems="stretch">
             <GridItemHeading>Price Chart</GridItemHeading>
             <CandleStickChart
@@ -63,23 +59,23 @@ function App() {
           </VStack>
         </LayoutGridItem>
 
-        {/* Add/Withdraw Collateral */}
-        <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+        {/* Account Info*/}
+        <LayoutGridItem rowSpan={1} colSpan={{ xl: 3 }}>
           <AccountInfo />
         </LayoutGridItem>
 
         {/* Buy/Sell window */}
-        <LayoutGridItem rowSpan={3} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+        <LayoutGridItem rowSpan={3} colSpan={{ xl: 3 }}>
           <BuySellWindow />
         </LayoutGridItem>
 
         {/* Trades */}
-        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
+        <LayoutGridItem rowSpan={2} colSpan={{ xl: 3 }}>
           <GridItemHeading>Trades</GridItemHeading>
         </LayoutGridItem>
 
         {/* Account Positions */}
-        <LayoutGridItem rowSpan={2} colSpan={{ base: 4, lg: 6, '2xl': 6 }}>
+        <LayoutGridItem rowSpan={2} colSpan={{ xl: 6 }}>
           <GridItemHeading>Positions</GridItemHeading>
         </LayoutGridItem>
       </LayoutGrid>

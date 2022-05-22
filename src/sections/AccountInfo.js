@@ -15,6 +15,11 @@ import { GridItemHeading } from '../components';
 
 export const AccountInfo = (props) => {
   const [selectedAsset, setSelectedAsset] = useState();
+  const [collateralAmount, setCollateralAmount] = useState();
+  const handleAmountChange = (e) => {
+    !isNaN(Number(e.target.value)) && setCollateralAmount(e.target.value);
+  };
+
   return (
     <VStack h="100%" w="100%" alignItems="center">
       <GridItemHeading w="100%">Account Info</GridItemHeading>
@@ -40,7 +45,11 @@ export const AccountInfo = (props) => {
           ))}
         </MenuList>
       </Menu>
-      <Input placeholder="Enter Amount" />
+      <Input
+        value={collateralAmount}
+        onChange={handleAmountChange}
+        placeholder="Enter Amount"
+      />
       <ButtonGroup w="100%">
         <Button w="100%" size="sm">
           Deposit
