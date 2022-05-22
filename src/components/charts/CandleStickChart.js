@@ -1,9 +1,9 @@
-import { createChart, ColorType } from 'lightweight-charts';
 import { Box } from '@chakra-ui/react';
-import React, { useEffect, useRef } from 'react';
+import { ColorType, createChart } from 'lightweight-charts';
+import React, { useEffect } from 'react';
 
 export const CandleStickChart = React.forwardRef((props, ref) => {
-  const { data, colors, ...rest } = props;
+  const { data, colors, candlestickSeries, ...rest } = props;
   const {
     backgroundColor,
     lineColor,
@@ -37,14 +37,15 @@ export const CandleStickChart = React.forwardRef((props, ref) => {
         borderVisible: false,
         tickMarkFormatter: (time) => {
           const date = new Date(time * 1000);
+          // console.log(date.getHours() + ':' + date.getMinutes());
           return date.getHours() + ':' + date.getMinutes();
         },
       },
     });
     chart.timeScale().fitContent();
 
-    const candlestickSeries = chart.addCandlestickSeries();
-    candlestickSeries.setData(data);
+    candlestickSeries.current = chart.addCandlestickSeries();
+    candlestickSeries.current.setData(data);
 
     window.addEventListener('resize', handleResize);
 
@@ -61,6 +62,7 @@ export const CandleStickChart = React.forwardRef((props, ref) => {
     textColor,
     areaTopColor,
     areaBottomColor,
+    candlestickSeries,
   ]);
 
   return <Box ref={ref} {...rest} />;

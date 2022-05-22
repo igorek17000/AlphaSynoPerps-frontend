@@ -105,3 +105,9 @@ export const dateTimeFormatter = (time) => {
   });
   return date + ' ' + monthsSymbol[month] + ' ' + miniYear + '  ' + _time;
 };
+
+export const liveCandleStickDataFormatter = (dataPoint) => {
+  const { OPEN, CLOSE, LOW, HIGH, TS } = dataPoint;
+  console.log({ OPEN, CLOSE, LOW, HIGH, TS });
+  return { time: TS, open: OPEN, close: CLOSE, low: LOW, high: HIGH };
+};

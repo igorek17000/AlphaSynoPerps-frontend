@@ -6,7 +6,7 @@ import {
   NavBar,
   StatTable,
 } from './components';
-import { AccountInfo, BuySellWindow, PriceChart } from './sections';
+import { AccountInfo, BuySellWindow, PriceChart, Assets } from './sections';
 
 function App() {
   const { colorMode } = useColorMode();
@@ -28,14 +28,7 @@ function App() {
       >
         {/* Asset */}
         <LayoutGridItem rowSpan={2} colSpan={{ xl: 3 }}>
-          <VStack h="100%" alignItems="stretch">
-            <GridItemHeading>Assets</GridItemHeading>
-            <StatTable
-              headingRow={['PAIR', 'PRICE', 'CHANGE']}
-              tableRows={[['ETH/USDC', '1963.75', '100%']]}
-              activeRow={0}
-            />
-          </VStack>
+          <Assets />
         </LayoutGridItem>
 
         {/* Price Chart */}

@@ -42,7 +42,9 @@ export const StatTable = ({
               }}
             >
               {row.map((cell, ind) => (
-                <Td key={`${ind}`}>{cell}</Td>
+                <Td key={`${ind}`} fontWeight="semibold" color="gray.500">
+                  {cell}
+                </Td>
               ))}
             </Tr>
           ))}

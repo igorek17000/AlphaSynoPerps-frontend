@@ -2,7 +2,7 @@ import { VStack } from '@chakra-ui/react';
 import React, { useEffect, useState, useRef } from 'react';
 import { GridItemHeading } from '../components';
 import { CandleStickChart } from '../components';
-import { candlestickSeriesData } from '../constants/chartMockData';
+import { liveCandleStickDataFormatter } from '../utils';
 import axios from 'axios';
 
 const colors = {
@@ -12,26 +12,24 @@ const colors = {
   areaBottomColor: 'rgba(41, 98, 255, 0.0)',
 };
 
+// candlestickSeries.update({
+//   time: '2018-12-31',
+//   open: 109.87,
+//   high: 114.69,
+//   low: 85.66,
+//   close: 112,
+// })
+
 export const PriceChart = (props) => {
   const [candleStickData, setCandleStickData] = useState([]);
+  const candlestickSeries = useRef();
   const chartRef = useRef();
   useEffect(() => {
     const makereq = async () => {
-      // const apiKey =
-      //   'HNReE0c5zfmn0s4csxL15mZ8B4SNRBsToGFjWXOFgiXKFQwozZashNytCFNlOeNW';
-      // const apiSecret =
-      //   'JQdNoxPg2gAMdqpZxvUn7paDABfZhrnESyyYCXw8MDymRoxkGPu61GiMpE8RbwD8';
-      // const client = new Spot(apiKey, apiSecret);
       const res = await axios.get(
         'https://min-api.cryptocompare.com/data/v2/histominute?fsym=ETH&tsym=USDC&api_key=8925a4fbc153877ec767efb3f4f062069f706295c45445ba7193f3dbaed393a1'
       );
-      // console.log('yooo');
-      // const data = res.data.Data.Data.map((candle) => {
-      //   const time = new Date(candle.time * 1000).toISOString();
-      //   return { ...candle, time };
-      // });
-      // console.log(data);
-      // console.log('ppppppppooo');
+      console.log(res.data.Data.Data);
       setCandleStickData(res.data.Data.Data);
     };
     makereq();
@@ -47,13 +45,21 @@ export const PriceChart = (props) => {
         webSocket.send(
           JSON.stringify({
             action: 'SubAdd',
-            subs: ['24~CCCAGG~ETH~USDC~m'],
+            subs: ['24~Binance~ETH~USDC~m'],
           })
         );
       };
 
       webSocket.onmessage = (event) => {
-        console.log(event.data);
+        const { TYPE } = JSON.parse(event.data);
+        // if (TYPE === '24') {
+        //   console.log(new Date(TS * 1000), { OPEN, CLOSE, LOW, HIGH, TYPE });
+        // }
+
+        TYPE === '24' &&
+          candlestickSeries.current.update(
+            liveCandleStickDataFormatter(JSON.parse(event.data))
+          );
       };
     };
     makereq2();
@@ -64,6 +70,7 @@ export const PriceChart = (props) => {
       <GridItemHeading>Price Chart</GridItemHeading>
       <CandleStickChart
         ref={chartRef}
+        candlestickSeries={candlestickSeries}
         flex="1"
         colors={colors}
         data={candleStickData}
