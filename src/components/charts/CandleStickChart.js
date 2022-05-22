@@ -27,8 +27,8 @@ export const CandleStickChart = React.forwardRef((props, ref) => {
         fontFamily: '"Rajdhani", sans-serif',
       },
       grid: {
-        vertLines: { color: 'RGBA(0, 0, 0, 0.2)' },
-        horzLines: { color: 'RGBA(0, 0, 0, 0.2)' },
+        vertLines: { color: 'RGBA(0, 0, 0, 0.3)' },
+        horzLines: { color: 'RGBA(0, 0, 0, 0.3)' },
       },
       width: ref.current.clientWidth,
       height: ref.current.clientHeight,
@@ -42,7 +42,6 @@ export const CandleStickChart = React.forwardRef((props, ref) => {
         },
       },
     });
-    chart.timeScale().fitContent();
 
     candlestickSeries.current = chart.addCandlestickSeries();
     candlestickSeries.current.setData(data);

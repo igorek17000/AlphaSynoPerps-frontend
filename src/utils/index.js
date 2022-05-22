@@ -103,7 +103,7 @@ export const dateTimeFormatter = (time) => {
     minute: 'numeric',
     hour12: true,
   });
-  return date + ' ' + monthsSymbol[month] + ' ' + miniYear + '  ' + _time;
+  return `${date} ${monthsSymbol[month]} ${miniYear}     ${_time}`;
 };
 
 export const liveCandleStickDataFormatter = (dataPoint) => {

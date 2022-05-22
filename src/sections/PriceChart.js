@@ -24,10 +24,11 @@ export const PriceChart = (props) => {
   const [candleStickData, setCandleStickData] = useState([]);
   const candlestickSeries = useRef();
   const chartRef = useRef();
+
   useEffect(() => {
     const makereq = async () => {
       const res = await axios.get(
-        'https://min-api.cryptocompare.com/data/v2/histominute?fsym=ETH&tsym=USDC&api_key=8925a4fbc153877ec767efb3f4f062069f706295c45445ba7193f3dbaed393a1'
+        'https://min-api.cryptocompare.com/data/v2/histominute?fsym=ETH&tsym=USDC&api_key=aa582ebc7c7672f2280fce8605d91af7c1a71425d17099a4b8ac77db18a21b57'
       );
       console.log(res.data.Data.Data);
       setCandleStickData(res.data.Data.Data);
@@ -36,33 +37,30 @@ export const PriceChart = (props) => {
   }, []);
 
   useEffect(() => {
-    const makereq2 = async () => {
+    const makereq = async () => {
       const webSocket = new WebSocket(
-        'wss://streamer.cryptocompare.com/v2?api_key=8925a4fbc153877ec767efb3f4f062069f706295c45445ba7193f3dbaed393a1'
+        'wss://streamer.cryptocompare.com/v2?api_key=aa582ebc7c7672f2280fce8605d91af7c1a71425d17099a4b8ac77db18a21b57'
       );
       webSocket.onopen = (event) => {
         console.log('connection open');
         webSocket.send(
           JSON.stringify({
             action: 'SubAdd',
-            subs: ['24~Binance~ETH~USDC~m'],
+            subs: ['24~CCCAGG~ETH~USDC~m'],
           })
         );
       };
 
       webSocket.onmessage = (event) => {
         const { TYPE } = JSON.parse(event.data);
-        // if (TYPE === '24') {
-        //   console.log(new Date(TS * 1000), { OPEN, CLOSE, LOW, HIGH, TYPE });
-        // }
-
-        TYPE === '24' &&
+        if (TYPE === '24') {
           candlestickSeries.current.update(
             liveCandleStickDataFormatter(JSON.parse(event.data))
           );
+        }
       };
     };
-    makereq2();
+    makereq();
   }, []);
 
   return (

@@ -162,7 +162,7 @@ export const BuySellWindow = (props) => {
 
       {/* Options */}
       {selectedContract === 'options' && (
-        <VStack alignItems="stretch" w="90%" alignSelf="center">
+        <VStack alignItems="stretch" w="100%" alignSelf="center">
           <HStack justifyContent="space-between" mb={4}>
             <ButtonGroup w="45%" spacing="0">
               <Button
@@ -213,10 +213,11 @@ export const BuySellWindow = (props) => {
           <VStack spacing={4}>
             <Menu placement="bottom">
               <MenuButton
-                size="sm"
+                size="md"
                 as={Button}
+                variant="border"
                 w="100%"
-                rightIcon={<Icon fontSize="20px" as={RiArrowDropDownLine} />}
+                rightIcon={<Icon fontSize="30px" as={RiArrowDropDownLine} />}
               >
                 {selectedStrike ?? 'Select Strike'}
               </MenuButton>
@@ -235,10 +236,11 @@ export const BuySellWindow = (props) => {
             </Menu>
             <Menu placement="bottom">
               <MenuButton
-                size="sm"
+                size="md"
                 as={Button}
+                variant="border"
                 w="100%"
-                rightIcon={<Icon fontSize="20px" as={RiArrowDropDownLine} />}
+                rightIcon={<Icon fontSize="30px" as={RiArrowDropDownLine} />}
               >
                 {selectedExpiryTime
                   ? dateTimeFormatter(selectedExpiryTime)
@@ -367,6 +369,7 @@ export const BuySellWindow = (props) => {
             </Box>
             <Button
               fontWeight="bold"
+              size="md"
               variant={selectedMethod === 'sell' ? 'red' : 'green'}
               leftIcon={<Icon fontSize="20px" as={GoGear} />}
               onClick={() => {

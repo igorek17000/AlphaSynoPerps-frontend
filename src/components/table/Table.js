@@ -22,7 +22,9 @@ export const StatTable = ({
         <Thead position={'sticky'} top="0" bgColor="gray.800">
           <Tr w="100%">
             {headingRow.map((heading, ind) => (
-              <Th key={`${ind}`}>{heading}</Th>
+              <Th color="gray.600" key={`${ind}`}>
+                {heading}
+              </Th>
             ))}
           </Tr>
         </Thead>
@@ -42,7 +44,7 @@ export const StatTable = ({
               }}
             >
               {row.map((cell, ind) => (
-                <Td key={`${ind}`} fontWeight="semibold" color="gray.500">
+                <Td key={`${ind}`} fontWeight="semibold" color="gray.300">
                   {cell}
                 </Td>
               ))}

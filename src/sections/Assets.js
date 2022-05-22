@@ -37,7 +37,7 @@ export const Assets = (props) => {
           const { data } = feed;
           const rate = data.RAW[tickerAssets[ind]].USDC.PRICE;
           const perc24hChange =
-            data.RAW[tickerAssets[ind]].USDC.CHANGEPCT24HOUR.toFixed(5);
+            data.RAW[tickerAssets[ind]].USDC.CHANGEPCT24HOUR.toFixed(3);
           const symbol = tickerAssets[ind] + '/USDC';
           return [symbol, rate, perc24hChange];
         });
@@ -51,7 +51,7 @@ export const Assets = (props) => {
     <VStack h="100%" alignItems="stretch">
       <GridItemHeading>Assets</GridItemHeading>
       <StatTable
-        headingRow={['PAIR', 'RATE', 'CHANGE(24H)']}
+        headingRow={['PAIR', 'RATE', '%CHANGE(24H)']}
         tableRows={priceFeeds}
         activeRow={0}
       />

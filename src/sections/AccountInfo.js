@@ -65,10 +65,10 @@ export const AccountInfo = (props) => {
       <GridItemHeading w="100%">Account Info</GridItemHeading>
       <Menu placement="bottom">
         <MenuButton
-          size="sm"
+          size="md"
           as={Button}
           w="100%"
-          rightIcon={<Icon fontSize="20px" as={RiArrowDropDownLine} />}
+          rightIcon={<Icon fontSize="30px" as={RiArrowDropDownLine} />}
         >
           {selectedAssetIndex ? assets[selectedAssetIndex] : 'Select Asset'}
         </MenuButton>
