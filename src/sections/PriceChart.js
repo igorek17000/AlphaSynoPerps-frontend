@@ -23,7 +23,7 @@ export const PriceChart = (props) => {
       //   'JQdNoxPg2gAMdqpZxvUn7paDABfZhrnESyyYCXw8MDymRoxkGPu61GiMpE8RbwD8';
       // const client = new Spot(apiKey, apiSecret);
       const res = await axios.get(
-        'https://min-api.cryptocompare.com/data/v2/histohour?fsym=ETH&tsym=USD&api_key=8925a4fbc153877ec767efb3f4f062069f706295c45445ba7193f3dbaed393a1'
+        'https://min-api.cryptocompare.com/data/v2/histominute?fsym=ETH&tsym=USDC&api_key=8925a4fbc153877ec767efb3f4f062069f706295c45445ba7193f3dbaed393a1'
       );
       // console.log('yooo');
       // const data = res.data.Data.Data.map((candle) => {
@@ -47,7 +47,7 @@ export const PriceChart = (props) => {
         webSocket.send(
           JSON.stringify({
             action: 'SubAdd',
-            subs: ['24~CCCAGG~ETH~USDT~H'],
+            subs: ['24~CCCAGG~ETH~USDC~m'],
           })
         );
       };

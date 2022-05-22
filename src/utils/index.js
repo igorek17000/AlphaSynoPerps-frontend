@@ -76,3 +76,32 @@ export const formatEtherCommify = (value, precision) => {
 export const formatEtherFixed = (value, precision) => {
   return (+ethers.utils.formatEther(value)).toFixed(precision ?? 3);
 };
+
+export const dateTimeFormatter = (time) => {
+  const monthsSymbol = {
+    0: 'JAN',
+    1: 'FEB',
+    2: 'MAR',
+    3: 'APR',
+    4: 'MAY',
+    5: 'JUN',
+    6: 'JUL',
+    7: 'AUG',
+    8: 'SEP',
+    9: 'OCT',
+    10: 'NOV',
+    11: 'DEC',
+  };
+  const browserTime = time * 1000;
+  const dateFull = new Date(browserTime);
+  const date = dateFull.getDate();
+  const month = dateFull.getMonth();
+  const year = dateFull.getFullYear();
+  const miniYear = `${year}`.slice(-2);
+  const _time = dateFull.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+  return date + ' ' + monthsSymbol[month] + ' ' + miniYear + '  ' + _time;
+};
