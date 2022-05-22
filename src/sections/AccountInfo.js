@@ -14,7 +14,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import { GridItemHeading } from '../components';
 
 export const AccountInfo = (props) => {
-  const [selectedAsset, setSelectedAsset] = useState('');
+  const [selectedAsset, setSelectedAsset] = useState();
   return (
     <VStack h="100%" w="100%" alignItems="center">
       <GridItemHeading w="100%">Account Info</GridItemHeading>
@@ -22,14 +22,22 @@ export const AccountInfo = (props) => {
         <MenuButton
           size="sm"
           as={Button}
-          w="66%"
+          w="100%"
           rightIcon={<Icon fontSize="20px" as={RiArrowDropDownLine} />}
         >
-          Select Asset
+          {selectedAsset ?? 'Select Asset'}
         </MenuButton>
         <MenuList>
-          <MenuItem>ETH</MenuItem>
-          <MenuItem>USDC</MenuItem>
+          {['ETH', 'USDC'].map((asset) => (
+            <MenuItem
+              key={asset}
+              onClick={() => {
+                setSelectedAsset(asset);
+              }}
+            >
+              {asset}
+            </MenuItem>
+          ))}
         </MenuList>
       </Menu>
       <Input placeholder="Enter Amount" />

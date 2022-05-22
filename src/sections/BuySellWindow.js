@@ -117,6 +117,7 @@ export const BuySellWindow = (props) => {
               <MenuList>
                 {[1900, 2000, 2100, 2200, 2300, 2400].map((strikePrice) => (
                   <MenuItem
+                    key={strikePrice}
                     onClick={() => {
                       setSelectedStrike(strikePrice);
                     }}

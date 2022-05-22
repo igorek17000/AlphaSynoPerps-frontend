@@ -1,10 +1,11 @@
 import { GridItem } from '@chakra-ui/react';
 export const LayoutGridItem = ({ children, ...props }) => (
   <GridItem
+    border="1px solid"
+    borderColor="gray.700"
     bgColor={'gray.800'}
-    borderRadius={'0'}
-    py="1rem"
-    px="1rem"
+    borderRadius={4}
+    p={6}
     {...props}
   >
     {children}
