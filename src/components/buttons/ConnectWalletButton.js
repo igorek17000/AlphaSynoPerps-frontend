@@ -1,7 +1,7 @@
-import { Button, Icon, Box } from '@chakra-ui/react';
+import { Button, Icon } from '@chakra-ui/react';
+import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { BiWallet } from 'react-icons/bi';
-import { useWeb3React } from '@web3-react/core';
 import useWallet from '../../hooks/useWallet';
 export const ConnectWalletButton = (props) => {
   const { account } = useWeb3React();

@@ -1,21 +1,4 @@
-import {
-  Button,
-  ButtonGroup,
-  VStack,
-  Input,
-  useColorMode,
-} from '@chakra-ui/react';
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from '@chakra-ui/react';
-
+import { useColorMode, VStack } from '@chakra-ui/react';
 import {
   GridItemHeading,
   LayoutGrid,
@@ -23,8 +6,9 @@ import {
   NavBar,
   StatTable,
 } from './components';
-import { CandleStickChart } from './components/charts';
+import { CandleStickChart } from './components';
 import { candlestickSeriesData } from './constants/chartMockData';
+import { AccountInfo, BuySellWindow } from './sections';
 
 const colors = {
   backgroundColor: 'rgba(255,255,255,0)',
@@ -37,7 +21,7 @@ function App() {
   const { colorMode } = useColorMode();
   console.log(colorMode);
   return (
-    <VStack className="App" alignItems="center" h="100vh" minH="800px" p={2}>
+    <VStack className="App" alignItems="center" minH="min-content" p={2}>
       <NavBar />
       <LayoutGrid
         templateRows={{
@@ -51,7 +35,7 @@ function App() {
           '2xl': 'repeat(12, 1fr)',
         }}
         gap={2}
-        height="94%"
+        height="100%"
         w="100%"
         position="relative"
       >
@@ -81,35 +65,12 @@ function App() {
 
         {/* Add/Withdraw Collateral */}
         <LayoutGridItem rowSpan={1} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
-          <VStack h="100%" w="100%" alignItems="center">
-            <GridItemHeading w="100%">Collateral</GridItemHeading>
-            <Menu placement="bottom">
-              <MenuButton size="sm" as={Button} w="66%">
-                Select Asset
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
-              </MenuList>
-            </Menu>
-            <Input placeholder="Enter Amount" />
-            <ButtonGroup w="100%">
-              <Button w="100%" size="sm">
-                Deposit
-              </Button>
-              <Button w="100%" size="sm">
-                Withdraw
-              </Button>
-            </ButtonGroup>
-          </VStack>
+          <AccountInfo />
         </LayoutGridItem>
 
         {/* Buy/Sell window */}
         <LayoutGridItem rowSpan={3} colSpan={{ base: 4, lg: 6, '2xl': 3 }}>
-          <GridItemHeading>Buy/Sell Window</GridItemHeading>
+          <BuySellWindow />
         </LayoutGridItem>
 
         {/* Trades */}
