@@ -1,21 +1,21 @@
-import { Box } from '@chakra-ui/react';
-import { ColorType, createChart } from 'lightweight-charts';
-import React, { useEffect } from 'react';
+import { Box } from '@chakra-ui/react'
+import { ColorType, createChart } from 'lightweight-charts'
+import React, { useEffect } from 'react'
 
 export const CandleStickChart = React.forwardRef((props, ref) => {
-  const { data, colors, candlestickSeries, ...rest } = props;
+  const { data, colors, candlestickSeries, ...rest } = props
   const {
     backgroundColor,
     lineColor,
     textColor,
     areaTopColor,
     areaBottomColor,
-  } = colors;
+  } = colors
 
   useEffect(() => {
     const handleResize = () => {
-      chart.applyOptions({ width: ref.current.clientWidth });
-    };
+      chart.applyOptions({ width: ref.current.clientWidth })
+    }
 
     const chart = createChart(ref.current, {
       layout: {
@@ -36,23 +36,22 @@ export const CandleStickChart = React.forwardRef((props, ref) => {
       timeScale: {
         borderVisible: false,
         tickMarkFormatter: (time) => {
-          const date = new Date(time * 1000);
-          // console.log(date.getHours() + ':' + date.getMinutes());
-          return date.getHours() + ':' + date.getMinutes();
+          const date = new Date(time * 1000)
+          return date.getHours() + ':' + date.getMinutes()
         },
       },
-    });
+    })
 
-    candlestickSeries.current = chart.addCandlestickSeries();
-    candlestickSeries.current.setData(data);
+    candlestickSeries.current = chart.addCandlestickSeries()
+    candlestickSeries.current.setData(data)
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleResize)
 
-      chart.remove();
-    };
+      chart.remove()
+    }
   }, [
     data,
     backgroundColor,
@@ -62,7 +61,7 @@ export const CandleStickChart = React.forwardRef((props, ref) => {
     areaTopColor,
     areaBottomColor,
     candlestickSeries,
-  ]);
+  ])
 
-  return <Box ref={ref} {...rest} />;
-});
+  return <Box ref={ref} {...rest} />
+})

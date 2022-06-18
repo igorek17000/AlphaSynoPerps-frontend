@@ -24,7 +24,6 @@ export const Assets = (props) => {
       };
 
       webSocket.onmessage = async (event) => {
-        console.log('yooooo');
         const priceFeedReqs = tickerAssets.map((ticker) => {
           const res = axios.get(
             `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${ticker}&tsyms=USDC&api_key=8925a4fbc153877ec767efb3f4f062069f706295c45445ba7193f3dbaed393a1`

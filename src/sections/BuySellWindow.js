@@ -10,68 +10,81 @@ import {
   VStack,
   Icon,
   Box,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { RiArrowDropDownLine } from 'react-icons/ri';
+} from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { RiArrowDropDownLine } from 'react-icons/ri'
 import {
   Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
   SliderMark,
-} from '@chakra-ui/react';
-import { GoGear } from 'react-icons/go';
-import { dateTimeFormatter, parseEther, getExistingContract } from '../utils';
-import { assetAddresses } from '../constants/assets';
-import { useWeb3React } from '@web3-react/core';
+} from '@chakra-ui/react'
+import { GoGear } from 'react-icons/go'
+import { dateTimeFormatter, parseEther, getExistingContract } from '../utils'
+import { assetAddresses } from '../constants/assets'
+import { useWeb3React } from '@web3-react/core'
+import AlphaSynoPerps from '../contracts/AlphaSynoPerps.json'
+import { GridItemHeading } from '../components'
 
 export const BuySellWindow = (props) => {
-  const { account, library } = useWeb3React();
-  const [selectedContract, setSelectedContract] = useState('options');
-  const [selectedMethod, setSelectedMethod] = useState('buy');
+  const { account, library } = useWeb3React()
+  const [selectedContract, setSelectedContract] = useState('options')
+  const [selectedMethod, setSelectedMethod] = useState('buy')
+
+  const vaultAddress = '0xbC114f0995EA2bcFb2A32EC73EeAa972b585c2c0'
 
   // options section states
-  const [selectedOptionType, setSelectedOptionType] = useState('call');
+  const [selectedOptionType, setSelectedOptionType] = useState('call')
 
-  const [selectedStrike, setSelectedStrike] = useState();
-  const [selectedExpiryTime, setSelectedExpiryTime] = useState();
-  const [optionQuantity, setOptionQuantity] = useState();
+  const [selectedStrike, setSelectedStrike] = useState()
+  const [selectedExpiryTime, setSelectedExpiryTime] = useState()
+  const [optionQuantity, setOptionQuantity] = useState()
   const handleOptionQuantityChange = (e) => {
-    !isNaN(Number(e.target.value)) && setOptionQuantity(e.target.value);
-  };
+    !isNaN(Number(e.target.value)) && setOptionQuantity(e.target.value)
+  }
 
   // perpetuals section state
-  const [sliderValue, setSliderValue] = useState(50);
-  const [perpAmount, setPerpAmount] = useState();
+  const [sliderValue, setSliderValue] = useState(50)
+  const [perpAmount, setPerpAmount] = useState()
   const handlePerpAmountChange = (e) => {
-    !isNaN(Number(e.target.value)) && setPerpAmount(e.target.value);
-  };
+    !isNaN(Number(e.target.value)) && setPerpAmount(e.target.value)
+  }
 
   const labelStyles = {
     mt: '2',
     ml: '-2.5',
     fontSize: 'sm',
     fontWeight: 'semibold',
-  };
+  }
 
   const openOptionPosition = async () => {
-    const isPut = selectedOptionType === 'put';
-    const isShort = selectedMethod === 'sell';
-    const amount = parseEther(optionQuantity);
-    const index = 1;
-    const assetIdx = 1;
-    const underlyingAsset = assetAddresses[index];
-    const expiryTimestamp = parseEther(`${selectedExpiryTime}`);
-    const strikePrice = parseEther(`${selectedStrike}`);
-    let vaultContract;
-    let vaultAddress;
+    const isPut = selectedOptionType === 'put'
+    const isShort = selectedMethod === 'sell'
+    const amount = parseEther(optionQuantity)
+    const index = 0
+    const assetIdx = 0
+    const underlyingAsset = assetAddresses[index]
+    const expiryTimestamp = parseEther(`${selectedExpiryTime}`)
+    const strikePrice = parseEther(`${selectedStrike}`)
+
+    console.log({
+      account,
+      underlyingAsset,
+      strikePrice,
+      expiryTimestamp,
+      isPut,
+      amount,
+      assetIdx,
+      index,
+    })
 
     const vault = await getExistingContract(
-      vaultContract,
+      AlphaSynoPerps,
       vaultAddress,
       library,
-      account
-    );
+      account,
+    )
 
     if (isShort) {
       await vault.shortOption(
@@ -82,8 +95,8 @@ export const BuySellWindow = (props) => {
         isPut,
         amount,
         assetIdx,
-        index
-      );
+        index,
+      )
     } else {
       await vault.longOption(
         account,
@@ -93,27 +106,25 @@ export const BuySellWindow = (props) => {
         isPut,
         amount,
         assetIdx,
-        index
-      );
+        index,
+      )
     }
-  };
+  }
 
   const openPerpPosition = async () => {
-    const isShort = selectedMethod === 'sell';
-    const amount = parseEther(perpAmount);
-    const index = 1;
-    const underlyingAsset = assetAddresses[index];
-    const assetIdx = 1;
-    const openPrice = parseEther('2000');
-    let vaultContract;
-    let vaultAddress;
+    const isShort = selectedMethod === 'sell'
+    const amount = parseEther(perpAmount)
+    const index = 1
+    const underlyingAsset = assetAddresses[index]
+    const assetIdx = 1
+    const openPrice = parseEther('2000')
 
     const vault = await getExistingContract(
-      vaultContract,
+      AlphaSynoPerps,
       vaultAddress,
       library,
-      account
-    );
+      account,
+    )
 
     if (isShort) {
       await vault.shortPerp(
@@ -121,29 +132,29 @@ export const BuySellWindow = (props) => {
         underlyingAsset,
         amount,
         openPrice,
-        assetIdx
-      );
+        assetIdx,
+      )
     } else {
       await vault.longPerp(
         account,
         underlyingAsset,
         amount,
         openPrice,
-        assetIdx
-      );
+        assetIdx,
+      )
     }
-  };
+  }
 
   return (
     <VStack h="100%" w="100%" alignItems="stretch">
-      {/* Contract Switcher */}
-      <ButtonGroup mb={4} spacing="0">
+      <GridItemHeading w="100%">Open position</GridItemHeading>
+      <ButtonGroup pb={4}>
         <Button
           w="100%"
           size="sm"
           variant={selectedContract === 'options' ? 'simple' : 'border'}
           onClick={() => {
-            setSelectedContract('options');
+            setSelectedContract('options')
           }}
         >
           Options
@@ -153,7 +164,7 @@ export const BuySellWindow = (props) => {
           size="sm"
           variant={selectedContract === 'perps' ? 'simple' : 'border'}
           onClick={() => {
-            setSelectedContract('perps');
+            setSelectedContract('perps')
           }}
         >
           Perpetuals
@@ -164,35 +175,35 @@ export const BuySellWindow = (props) => {
       {selectedContract === 'options' && (
         <VStack alignItems="stretch" w="100%" alignSelf="center">
           <HStack justifyContent="space-between" mb={4}>
-            <ButtonGroup w="45%" spacing="0">
+            <ButtonGroup w="45%">
               <Button
                 w="100%"
                 size="sm"
                 variant={selectedMethod === 'buy' ? 'green' : 'border'}
                 onClick={() => {
-                  setSelectedMethod('buy');
+                  setSelectedMethod('buy')
                 }}
               >
-                Buy/Long
+                Long
               </Button>
               <Button
                 w="100%"
                 size="sm"
                 variant={selectedMethod === 'sell' ? 'red' : 'border'}
                 onClick={() => {
-                  setSelectedMethod('sell');
+                  setSelectedMethod('sell')
                 }}
               >
-                Sell/Short
+                Short
               </Button>
             </ButtonGroup>
-            <ButtonGroup w="45%" spacing="0">
+            <ButtonGroup w="45%">
               <Button
                 w="100%"
                 size="sm"
                 variant={selectedOptionType === 'call' ? 'simple' : 'border'}
                 onClick={() => {
-                  setSelectedOptionType('call');
+                  setSelectedOptionType('call')
                 }}
               >
                 Call
@@ -202,7 +213,7 @@ export const BuySellWindow = (props) => {
                 size="sm"
                 variant={selectedOptionType === 'put' ? 'simple' : 'border'}
                 onClick={() => {
-                  setSelectedOptionType('put');
+                  setSelectedOptionType('put')
                 }}
               >
                 Put
@@ -226,7 +237,7 @@ export const BuySellWindow = (props) => {
                   <MenuItem
                     key={strikePrice}
                     onClick={() => {
-                      setSelectedStrike(strikePrice);
+                      setSelectedStrike(strikePrice)
                     }}
                   >
                     {strikePrice}
@@ -248,13 +259,18 @@ export const BuySellWindow = (props) => {
               </MenuButton>
               <MenuList>
                 {[
-                  1653292800, 1653379200, 1653638400, 1654243200, 1654848000,
-                  1656057600, 1664524800,
+                  1653292800,
+                  1653379200,
+                  1653638400,
+                  1654243200,
+                  1654848000,
+                  1656057600,
+                  1664524800,
                 ].map((expiryTime) => (
                   <MenuItem
                     key={expiryTime}
                     onClick={() => {
-                      setSelectedExpiryTime(expiryTime);
+                      setSelectedExpiryTime(expiryTime)
                     }}
                   >
                     {dateTimeFormatter(expiryTime)}
@@ -273,15 +289,15 @@ export const BuySellWindow = (props) => {
               fontWeight="bold"
               variant={selectedMethod === 'sell' ? 'red' : 'green'}
               w="100%"
-              leftIcon={<Icon fontSize="20px" as={GoGear} />}
+              // leftIcon={<Icon fontSize="20px" as={GoGear} />}
               disabled={
                 !(selectedExpiryTime && selectedStrike && optionQuantity)
               }
               onClick={() => {
-                openOptionPosition();
+                openOptionPosition()
               }}
             >
-              Run risk engine
+              Confirm
             </Button>
           </VStack>
         </VStack>
@@ -289,27 +305,27 @@ export const BuySellWindow = (props) => {
 
       {/* Perpetuals */}
       {selectedContract === 'perps' && (
-        <VStack alignItems="stretch" w="90%" alignSelf="center">
-          <ButtonGroup w="45%" spacing="0" alignSelf="flex-start" mb={4}>
+        <VStack alignItems="stretch" w="100%" alignSelf="center">
+          <ButtonGroup w="45%" alignSelf="flex-start" mb={4}>
             <Button
               w="100%"
               size="sm"
               variant={selectedMethod === 'buy' ? 'green' : 'border'}
               onClick={() => {
-                setSelectedMethod('buy');
+                setSelectedMethod('buy')
               }}
             >
-              Buy/Long
+              Long
             </Button>
             <Button
               w="100%"
               size="sm"
               variant={selectedMethod === 'sell' ? 'red' : 'border'}
               onClick={() => {
-                setSelectedMethod('sell');
+                setSelectedMethod('sell')
               }}
             >
-              Sell/Short
+              Short
             </Button>
           </ButtonGroup>
 
@@ -371,16 +387,16 @@ export const BuySellWindow = (props) => {
               fontWeight="bold"
               size="md"
               variant={selectedMethod === 'sell' ? 'red' : 'green'}
-              leftIcon={<Icon fontSize="20px" as={GoGear} />}
+              // leftIcon={<Icon fontSize="20px" as={GoGear} />}
               onClick={() => {
-                openPerpPosition();
+                openPerpPosition()
               }}
             >
-              Run risk engine
+              Confirm
             </Button>
           </VStack>
         </VStack>
       )}
     </VStack>
-  );
-};
+  )
+}

@@ -26,16 +26,19 @@ export const styles = {
       wordWrap: 'break-word',
     },
     '::-webkit-scrollbar': {
-      width: '8px',
+      // width: '8px',
+      display: 'none',
+      '-ms-overflow-style': 'none' /* IE and Edge */,
+      scrollbarWidth: 'none' /* Firefox */,
     },
-    '::-webkit-scrollbar-track': {
-      background: 'none',
-      borderRadius: '30px',
-      pl: '20px',
-    },
-    '::-webkit-scrollbar-thumb': {
-      background: 'gray.700',
-      borderRadius: '30px',
-    },
+    // '::-webkit-scrollbar-track': {
+    //   background: 'none',
+    //   borderRadius: '30px',
+    //   pl: '20px',
+    // },
+    // '::-webkit-scrollbar-thumb': {
+    //   background: 'gray.700',
+    //   borderRadius: '30px',
+    // },
   }),
-};
+}

@@ -4,7 +4,7 @@ export const Button = {
     _focus: {
       shadow: 'none',
     },
-    borderRadius: '0',
+    borderRadius: '10',
   },
 
   sizes: {
@@ -67,4 +67,4 @@ export const Button = {
     size: 'md',
     variant: 'simple',
   },
-};
+}

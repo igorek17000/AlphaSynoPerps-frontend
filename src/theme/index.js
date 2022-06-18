@@ -4,8 +4,6 @@ import { styles } from './styles';
 import { colors, fontWeights } from './foundations';
 import { Button, Input, NumberInput } from './components';
 
-console.log(Button);
-
 const theme = extendTheme({
   components: {
     Button,
