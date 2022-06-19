@@ -2,7 +2,8 @@ import { parseFullSymbol } from './helpers.js'
 import * as io from 'socket.io-client'
 
 const apiKey =
-  '45d75c29c47e938467fc02fa1a1aba98b5b45f160fe9dca6af376adb3dbbd295'
+  '34810bcba43f83503e4c55e38c1dd9cada40a7df90cd76ec3c5caaa7aa307689'
+
 const socket = new WebSocket(
   'wss://streamer.cryptocompare.com/v2?api_key=' + apiKey,
 )
@@ -14,11 +15,11 @@ socket.onopen = () => {
 }
 
 socket.onclose = (event) => {
-  console.log('[socket] Disconnected:', event.reason)
+  console.log('[socket] Disconnected:', event)
 }
 
-socket.onerror = (error) => {
-  console.log('[socket] Error:', error)
+socket.onerror = (event) => {
+  console.log('[socket] Error:', event)
 }
 
 socket.onmessage = (event) => {
@@ -36,13 +37,13 @@ socket.onmessage = (event) => {
     tradePriceStr,
   ] = data.split('~')
 
-  if (parseInt(eventTypeStr) !== 0) {
-    // skip all non-TRADE events
-    return
-  }
+  // if (parseInt(eventTypeStr) !== 0) {
+  //   // skip all non-TRADE events
+  //   return
+  // }
   const tradePrice = parseFloat(tradePriceStr)
   const tradeTime = parseInt(tradeTimeStr)
-  const channelString = `0~${exchange}~${fromSymbol}~${toSymbol}`
+  const channelString = `24~${exchange}~${fromSymbol}~${toSymbol}~m`
   const subscriptionItem = channelToSubscription.get(channelString)
   if (subscriptionItem === undefined) {
     return

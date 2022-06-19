@@ -6,11 +6,10 @@ import {
   NavBar,
   StatTable,
 } from './components'
-import { AccountInfo, BuySellWindow, PriceChart, Assets } from './sections'
+import { AccountInfo, BuySellWindow } from './sections'
 
 function App() {
   const { colorMode } = useColorMode()
-  console.log(colorMode)
   return (
     <VStack className="App" alignItems="center" minH="min-content" p={2}>
       <NavBar />
@@ -21,7 +20,7 @@ function App() {
         templateColumns={{
           xl: 'repeat(12, 1fr)',
         }}
-        gap={1}
+        gap={2}
         height="100%"
         w="100%"
         position="relative"
@@ -33,7 +32,7 @@ function App() {
 
         {/* Price Chart */}
         <LayoutGridItem rowSpan={2} colSpan={{ xl: 6 }} p="0">
-          <PriceChart />
+          {/* <PriceChart /> */}
         </LayoutGridItem>
 
         {/* Account Info*/}

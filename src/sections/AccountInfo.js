@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  HStack,
   Icon,
   Input,
   Menu,
@@ -11,31 +12,48 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import { GridItemHeading } from '../components'
 import { assetAddresses, assets } from '../constants/assets'
 import AlphaSynoPerps from '../contracts/AlphaSynoPerps.json'
-import { getExistingContract, parseEther, toBN } from '../utils'
+import { getExistingContract, parseEther, toBN, formatEther } from '../utils'
 
 export const AccountInfo = (props) => {
   const { account, library } = useWeb3React()
 
-  // form state
   const [selectedAssetIndex, setSelectedAssetIndex] = useState()
   const [collateralAmount, setCollateralAmount] = useState()
   const handleAmountChange = (e) => {
     !isNaN(Number(e.target.value)) && setCollateralAmount(e.target.value)
   }
 
-  console.log(selectedAssetIndex)
-  const vaultAddress = '0xbC114f0995EA2bcFb2A32EC73EeAa972b585c2c0'
+  const [collateral, setCollateral] = useState([])
+
+  const vaultAddress = '0xC2FB4560a69C3c38067A733c8e5C2887c555C5a5'
+
+  const getCollateral = async () => {
+    const vault = await getExistingContract(
+      AlphaSynoPerps,
+      vaultAddress,
+      library,
+      account,
+    )
+    const [collAsset, collAmount] = await vault.getColl(account)
+    return [collAsset, collAmount]
+  }
 
   const depositCollateral = async () => {
     const _amount = parseEther(collateralAmount)
     const assetAddress = assetAddresses[selectedAssetIndex]
 
-    const index = parseEther(`${selectedAssetIndex}`)
+    const [existingCollAsset, existingCollAmount] = await getCollateral()
+
+    let assetIndex = existingCollAsset.findIndex(
+      (assetAddr) => assetAddr === assetAddress,
+    )
+
+    assetIndex = assetIndex === -1 ? existingCollAsset.length : assetIndex
 
     const vault = await getExistingContract(
       AlphaSynoPerps,
@@ -44,12 +62,20 @@ export const AccountInfo = (props) => {
       account,
     )
 
-    await vault.addCollateral(account, assetAddress, _amount, toBN('1'))
+    const tx = await vault.addCollateral(
+      account,
+      assetAddress,
+      _amount,
+      toBN(`${assetIndex}`),
+    )
+    await tx.wait()
+    setCollateral((await getCollateral())[1])
   }
 
   const withdrawCollateral = async () => {
     const _amount = parseEther(collateralAmount)
     const assetAddress = assetAddresses[selectedAssetIndex]
+
     const index = selectedAssetIndex
 
     const vault = await getExistingContract(
@@ -59,24 +85,46 @@ export const AccountInfo = (props) => {
       account,
     )
 
-    await vault.withdrawCollateral(account, assetAddress, _amount, index)
-  }
-
-  const getCollateralAmount = async () => {
-    const vault = await getExistingContract(
-      AlphaSynoPerps,
-      vaultAddress,
-      library,
+    const tx = await vault.withdrawCollateral(
       account,
+      assetAddress,
+      _amount,
+      index,
     )
-
-    console.log(await vault.getColl(account))
+    await tx.wait()
+    setCollateral((await getCollateral())[1])
   }
+
+  console.log(collateral)
+
+  useEffect(() => {
+    const Func = async () => {
+      setCollateral((await getCollateral())[1])
+    }
+    library && account && Func()
+  }, [library, account])
 
   return (
     <VStack h="100%" w="100%" alignItems="center">
       <GridItemHeading w="100%">Account Info</GridItemHeading>
-      <Box flex="1"></Box>
+      <GridItemHeading w="100%" fontWeight="light" fontSize="md">
+        Collateral
+      </GridItemHeading>
+      <HStack w="100%" flex="1" justifyContent="space-around">
+        {assets.map((asset, ind) => (
+          <VStack>
+            <Box fontWeight="bold" fontSize="lg">
+              {asset}
+            </Box>
+            <Box fontWeight="bold">
+              {collateral[ind] ? formatEther(collateral[ind]) : 0}
+            </Box>
+          </VStack>
+        ))}
+      </HStack>
+      <GridItemHeading w="100%" fontWeight="normal" fontSize="md">
+        Adjust Collateral
+      </GridItemHeading>
       <Menu placement="bottom">
         <MenuButton
           size="md"

@@ -47,7 +47,7 @@ export const PriceChart = (props) => {
 
   const chartProps = {
     symbol: 'Bitfinex:BTC/USD',
-    interval: '5D',
+    interval: '1D',
     libraryPath: '../charting_library/',
     chartsStorageUrl: 'https://saveload.tradingview.com',
     chartsStorageApiVersion: '1.1',

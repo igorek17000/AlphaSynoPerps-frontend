@@ -135,6 +135,7 @@ export default {
       tsym: parsedSymbol.toSymbol,
       toTs: to,
       limit: 2000,
+      api: '34810bcba43f83503e4c55e38c1dd9cada40a7df90cd76ec3c5caaa7aa307689',
     }
     const query = Object.keys(urlParameters)
       .map((name) => `${name}=${encodeURIComponent(urlParameters[name])}`)
