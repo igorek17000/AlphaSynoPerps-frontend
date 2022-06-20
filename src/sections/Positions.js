@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, VStack, Box } from '@chakra-ui/react'
+import { Button, ButtonGroup, VStack, Box, HStack } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import { useEffect, useState } from 'react'
 import { GridItemHeading, StatTable } from '../components'
@@ -10,7 +10,7 @@ export const Positions = (props) => {
   const [selectedContract, setSelectedContract] = useState('options')
   const [shortOptionPositions, setShortPositions] = useState([])
   const [longOptionPositions, setLongPositions] = useState([])
-  const [perpPosition, setPerpPosition] = useState({})
+  const [perpPosition, setPerpPosition] = useState()
 
   const vaultAddress = '0xbe9854019e5EFA4109582ca7bBF003C842535D53'
 
@@ -79,7 +79,7 @@ export const Positions = (props) => {
       <ButtonGroup pb={4}>
         <Button
           w="100%"
-          size="sm"
+          size="md"
           variant={selectedContract === 'options' ? 'simple' : 'border'}
           onClick={() => {
             setSelectedContract('options')
@@ -89,7 +89,7 @@ export const Positions = (props) => {
         </Button>
         <Button
           w="100%"
-          size="sm"
+          size="md"
           variant={selectedContract === 'perps' ? 'simple' : 'border'}
           onClick={() => {
             setSelectedContract('perps')
@@ -102,36 +102,50 @@ export const Positions = (props) => {
       {/* Options */}
       {selectedContract === 'options' && (
         <VStack alignItems="stretch" w="100%" alignSelf="center">
-          <StatTable
-            headingRow={['Expiry', 'Strike', 'Size', 'Type']}
-            tableRows={shortOptionPositions}
-            activeRow={0}
-          />
-          <StatTable
-            headingRow={['Expiry', 'Strike', 'Size', 'Type']}
-            tableRows={longOptionPositions}
-            activeRow={0}
-          />
+          {shortOptionPositions.length > 0 && (
+            <>
+              <GridItemHeading fontWeight="normal" w="100%">
+                Call options
+              </GridItemHeading>
+              <StatTable
+                headingRow={['Expiry', 'Strike', 'Size', 'Type']}
+                tableRows={shortOptionPositions}
+                activeRow={0}
+              />
+            </>
+          )}
+          {longOptionPositions.length > 0 && (
+            <>
+              <GridItemHeading fontWeight="normal" w="100%">
+                Put options
+              </GridItemHeading>
+              <StatTable
+                headingRow={['Expiry', 'Strike', 'Size', 'Type']}
+                tableRows={longOptionPositions}
+                activeRow={0}
+              />
+            </>
+          )}
         </VStack>
       )}
 
       {/* Perpetuals */}
-      {selectedContract === 'perps' && (
+      {selectedContract === 'perps' && perpPosition && (
         <VStack alignItems="stretch" w="100%" alignSelf="center">
           <VStack>
-            <Box>Amount</Box>
+            <Box fontWeight="bold">Amount</Box>
             <Box>{perpPosition.amount}</Box>
           </VStack>
           <VStack>
-            <Box>Open price</Box>
+            <Box fontWeight="bold">Open price</Box>
             <Box>{perpPosition.openPrice}</Box>
           </VStack>
           <VStack>
-            <Box>lastUpdatedAt</Box>
+            <Box fontWeight="bold">Last Updated At</Box>
             <Box>{perpPosition.lastUpdatedAt}</Box>
           </VStack>
           <VStack>
-            <Box>Type</Box>
+            <Box fontWeight="bold">Type</Box>
             <Box>{perpPosition.type}</Box>
           </VStack>
         </VStack>

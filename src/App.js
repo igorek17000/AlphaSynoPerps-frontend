@@ -6,12 +6,12 @@ import {
   NavBar,
   StatTable,
 } from './components'
-import { AccountInfo, BuySellWindow, Positions } from './sections'
+import { AdjustCollateral, BuySellWindow, Positions } from './sections'
 
 function App() {
   const { colorMode } = useColorMode()
   return (
-    <VStack className="App" alignItems="center" minH="min-content" p={2}>
+    <VStack className="App" alignItems="center" minH="100vh" p={2}>
       <NavBar />
       <LayoutGrid
         templateRows={{
@@ -22,6 +22,7 @@ function App() {
         }}
         gap={2}
         height="100%"
+        flex="1"
         w="100%"
         position="relative"
       >
@@ -35,9 +36,9 @@ function App() {
           {/* <PriceChart /> */}
         </LayoutGridItem>
 
-        {/* Account Info*/}
+        {/* Adjust Collateral*/}
         <LayoutGridItem rowSpan={2} colSpan={{ xl: 3 }}>
-          <AccountInfo />
+          <AdjustCollateral />
         </LayoutGridItem>
         {/* Trades */}
         <LayoutGridItem rowSpan={2} colSpan={{ xl: 3 }}>

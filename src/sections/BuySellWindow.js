@@ -364,7 +364,7 @@ export const BuySellWindow = (props) => {
               value={perpAmount}
               onChange={handlePerpAmountChange}
             />
-            <Box>
+            {/* <Box>
               <Box fontSize="sm" alignSelf="flex-start" fontWeight="semibold">
                 Leverage
               </Box>
@@ -411,7 +411,7 @@ export const BuySellWindow = (props) => {
                   <SliderThumb />
                 </Slider>
               </Box>
-            </Box>
+            </Box> */}
             <Button
               fontWeight="bold"
               size="md"

@@ -19,7 +19,7 @@ import { assetAddresses, assets } from '../constants/assets'
 import AlphaSynoPerps from '../contracts/AlphaSynoPerps.json'
 import { getExistingContract, parseEther, toBN, formatEther } from '../utils'
 
-export const AccountInfo = (props) => {
+export const AdjustCollateral = (props) => {
   const { account, library } = useWeb3React()
 
   const [selectedAssetIndex, setSelectedAssetIndex] = useState()
@@ -106,10 +106,7 @@ export const AccountInfo = (props) => {
 
   return (
     <VStack h="100%" w="100%" alignItems="center">
-      <GridItemHeading w="100%">Account Info</GridItemHeading>
-      <GridItemHeading w="100%" fontWeight="light" fontSize="md">
-        Collateral
-      </GridItemHeading>
+      <GridItemHeading w="100%">Adjust Collateral</GridItemHeading>
       <HStack w="100%" flex="1" justifyContent="space-around">
         {assets.map((asset, ind) => (
           <VStack>
@@ -122,9 +119,6 @@ export const AccountInfo = (props) => {
           </VStack>
         ))}
       </HStack>
-      <GridItemHeading w="100%" fontWeight="normal" fontSize="md">
-        Adjust Collateral
-      </GridItemHeading>
       <Menu placement="bottom">
         <MenuButton
           size="md"
