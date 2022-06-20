@@ -6,7 +6,7 @@ import {
   NavBar,
   StatTable,
 } from './components'
-import { AccountInfo, BuySellWindow } from './sections'
+import { AccountInfo, BuySellWindow, Positions } from './sections'
 
 function App() {
   const { colorMode } = useColorMode()
@@ -46,7 +46,7 @@ function App() {
 
         {/* Account Positions */}
         <LayoutGridItem rowSpan={2} colSpan={{ xl: 6 }}>
-          <GridItemHeading>Positions</GridItemHeading>
+          <Positions />
         </LayoutGridItem>
 
         {/* Buy/Sell window */}

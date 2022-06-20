@@ -21,7 +21,12 @@ import {
   SliderMark,
 } from '@chakra-ui/react'
 import { GoGear } from 'react-icons/go'
-import { dateTimeFormatter, parseEther, getExistingContract } from '../utils'
+import {
+  dateTimeFormatter,
+  parseEther,
+  getExistingContract,
+  toBN,
+} from '../utils'
 import { assetAddresses } from '../constants/assets'
 import { useWeb3React } from '@web3-react/core'
 import AlphaSynoPerps from '../contracts/AlphaSynoPerps.json'
@@ -32,7 +37,7 @@ export const BuySellWindow = (props) => {
   const [selectedContract, setSelectedContract] = useState('options')
   const [selectedMethod, setSelectedMethod] = useState('buy')
 
-  const vaultAddress = '0x4E6999edf0c61E9cf9180EEa5ddfE67d56F7498E'
+  const vaultAddress = '0x275b9fe6FFb8f619E60958aEB2CafB50e9c0745b'
 
   // options section states
   const [selectedOptionType, setSelectedOptionType] = useState('call')
@@ -62,22 +67,9 @@ export const BuySellWindow = (props) => {
     const isPut = selectedOptionType === 'put'
     const isShort = selectedMethod === 'sell'
     const amount = parseEther(optionQuantity)
-    const index = 0
-    const assetIdx = 0
-    const underlyingAsset = assetAddresses[index]
-    const expiryTimestamp = parseEther(`${selectedExpiryTime}`)
+    const underlyingAsset = '0xCBb3a155CC7aa08434E575878e18A7a7B025b62F'
+    const expiryTimestamp = toBN(selectedExpiryTime)
     const strikePrice = parseEther(`${selectedStrike}`)
-
-    console.log({
-      account,
-      underlyingAsset,
-      strikePrice,
-      expiryTimestamp,
-      isPut,
-      amount,
-      assetIdx,
-      index,
-    })
 
     const vault = await getExistingContract(
       AlphaSynoPerps,
@@ -86,8 +78,25 @@ export const BuySellWindow = (props) => {
       account,
     )
 
+    const derivAssets = await vault.getDerivAssets(account)
+    console.log(derivAssets)
+
+    let assetIdx = derivAssets.findIndex(
+      (assetAddr) => assetAddr === underlyingAsset,
+    )
+
+    assetIdx = assetIdx === -1 ? derivAssets.length : assetIdx
+
     if (isShort) {
-      await vault.shortOption(
+      let index, shortPositions
+      try {
+        shortPositions = await vault.getShortOptions(account, underlyingAsset)
+        index = shortPositions.length
+      } catch (error) {
+        index = 0
+      }
+
+      const tx = await vault.shortOption(
         account,
         underlyingAsset,
         strikePrice,
@@ -97,8 +106,17 @@ export const BuySellWindow = (props) => {
         assetIdx,
         index,
       )
+      await tx.wait()
+      console.log(await vault.getAllOptions(account, underlyingAsset))
     } else {
-      await vault.longOption(
+      let index, longPositions
+      try {
+        longPositions = await vault.getLongOptions(account, underlyingAsset)
+        index = longPositions.length
+      } catch (error) {
+        index = 0
+      }
+      const tx = await vault.longOption(
         account,
         underlyingAsset,
         strikePrice,
@@ -108,15 +126,15 @@ export const BuySellWindow = (props) => {
         assetIdx,
         index,
       )
+      await tx.wait()
+      console.log(await vault.getAllOptions(account, underlyingAsset))
     }
   }
 
   const openPerpPosition = async () => {
     const isShort = selectedMethod === 'sell'
     const amount = parseEther(perpAmount)
-    const index = 1
-    const underlyingAsset = assetAddresses[index]
-    const assetIdx = 1
+    const underlyingAsset = '0xCBb3a155CC7aa08434E575878e18A7a7B025b62F'
     const openPrice = parseEther('2000')
 
     const vault = await getExistingContract(
@@ -126,8 +144,16 @@ export const BuySellWindow = (props) => {
       account,
     )
 
+    const derivAssets = await vault.getDerivAssets(account)
+
+    let assetIdx = derivAssets.findIndex(
+      (assetAddr) => assetAddr === underlyingAsset,
+    )
+
+    assetIdx = assetIdx === -1 ? derivAssets.length : assetIdx
+    let tx
     if (isShort) {
-      await vault.shortPerp(
+      tx = await vault.shortPerp(
         account,
         underlyingAsset,
         amount,
@@ -135,7 +161,7 @@ export const BuySellWindow = (props) => {
         assetIdx,
       )
     } else {
-      await vault.longPerp(
+      tx = await vault.longPerp(
         account,
         underlyingAsset,
         amount,
@@ -143,6 +169,9 @@ export const BuySellWindow = (props) => {
         assetIdx,
       )
     }
+    await tx.wait()
+
+    console.log(await vault.getPerpPos(account, underlyingAsset))
   }
 
   return (

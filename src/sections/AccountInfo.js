@@ -30,7 +30,7 @@ export const AccountInfo = (props) => {
 
   const [collateral, setCollateral] = useState([])
 
-  const vaultAddress = '0xC2FB4560a69C3c38067A733c8e5C2887c555C5a5'
+  const vaultAddress = '0x275b9fe6FFb8f619E60958aEB2CafB50e9c0745b'
 
   const getCollateral = async () => {
     const vault = await getExistingContract(
