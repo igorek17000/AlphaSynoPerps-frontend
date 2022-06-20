@@ -76,7 +76,7 @@ export const Positions = (props) => {
   return (
     <VStack h="100%" w="100%" alignItems="stretch">
       <GridItemHeading w="100%">Postions</GridItemHeading>
-      <ButtonGroup pb={4}>
+      <ButtonGroup pb={4} alignSelf="flex-start">
         <Button
           w="100%"
           size="md"
@@ -105,7 +105,7 @@ export const Positions = (props) => {
           {shortOptionPositions.length > 0 && (
             <>
               <GridItemHeading fontWeight="normal" w="100%">
-                Call options
+                Short
               </GridItemHeading>
               <StatTable
                 headingRow={['Expiry', 'Strike', 'Size', 'Type']}
@@ -117,7 +117,7 @@ export const Positions = (props) => {
           {longOptionPositions.length > 0 && (
             <>
               <GridItemHeading fontWeight="normal" w="100%">
-                Put options
+                Long
               </GridItemHeading>
               <StatTable
                 headingRow={['Expiry', 'Strike', 'Size', 'Type']}

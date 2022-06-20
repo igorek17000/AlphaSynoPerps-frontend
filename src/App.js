@@ -9,7 +9,6 @@ import {
 import { AdjustCollateral, BuySellWindow, Positions } from './sections'
 
 function App() {
-  const { colorMode } = useColorMode()
   return (
     <VStack className="App" alignItems="center" minH="100vh" p={2}>
       <NavBar />
@@ -21,7 +20,6 @@ function App() {
           xl: 'repeat(12, 1fr)',
         }}
         gap={2}
-        height="100%"
         flex="1"
         w="100%"
         position="relative"
