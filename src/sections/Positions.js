@@ -1,18 +1,20 @@
-import { Button, ButtonGroup, VStack } from '@chakra-ui/react'
+import { Button, ButtonGroup, VStack, Box } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import { useEffect, useState } from 'react'
 import { GridItemHeading, StatTable } from '../components'
 import AlphaSynoPerps from '../contracts/AlphaSynoPerps.json'
-import { getExistingContract } from '../utils'
+import { dateTimeFormatter, formatEther, getExistingContract } from '../utils'
 
 export const Positions = (props) => {
   const { account, library } = useWeb3React()
   const [selectedContract, setSelectedContract] = useState('options')
   const [shortOptionPositions, setShortPositions] = useState([])
   const [longOptionPositions, setLongPositions] = useState([])
-  const [perpPositions, setPerpPositions] = useState([])
+  const [perpPosition, setPerpPosition] = useState({})
 
-  const vaultAddress = '0x275b9fe6FFb8f619E60958aEB2CafB50e9c0745b'
+  const vaultAddress = '0xbe9854019e5EFA4109582ca7bBF003C842535D53'
+
+  //   console.log(shortOptionPositions)
 
   useEffect(() => {
     const fetchPositions = async () => {
@@ -22,21 +24,54 @@ export const Positions = (props) => {
         library,
         account,
       )
-      const shortPositions = await vault.getShortOptions(
+      const _shortOptionPositions = await vault.getShortOptions(
         account,
         '0xCBb3a155CC7aa08434E575878e18A7a7B025b62F',
       )
-      const longPositions = await vault.getLongOptions(
+      const _longOptionPositions = await vault.getLongOptions(
         account,
         '0xCBb3a155CC7aa08434E575878e18A7a7B025b62F',
       )
-      const perpPositions = await vault.getPerpPos(
+      const _perpPosition = await vault.getPerpPos(
         account,
         '0xCBb3a155CC7aa08434E575878e18A7a7B025b62F',
       )
+      //   console.log(_shortOptionPositions[0])
+      //   console.log(longOptionPositions[0])
+      //   console.log(_perpPosition)
+      setShortPositions(
+        _shortOptionPositions.map((pos) => [
+          dateTimeFormatter(pos.expiryTimestamp.toString()),
+          formatEther(pos.strikePrice),
+          formatEther(pos.amount),
+          pos.isPut ? 'Put' : 'Call',
+        ]),
+      )
+      setLongPositions(
+        _longOptionPositions.map((pos) => [
+          dateTimeFormatter(pos.expiryTimestamp.toString()),
+
+          formatEther(pos.strikePrice),
+          formatEther(pos.amount),
+          pos.isPut ? 'Put' : 'Call',
+        ]),
+      )
+      const { amount, isLong, lastUpdatedAt, openPrice } = _perpPosition
+      console.log({
+        amount: formatEther(amount),
+        type: isLong ? 'Long' : 'Short',
+        lastUpdatedAt: dateTimeFormatter(lastUpdatedAt.toString()),
+        openprice: formatEther(openPrice),
+      })
+      setPerpPosition({
+        amount: formatEther(amount),
+        type: isLong ? 'Long' : 'Short',
+        lastUpdatedAt: dateTimeFormatter(lastUpdatedAt.toString()),
+        openPrice: formatEther(openPrice),
+      })
     }
     account && library && fetchPositions()
-  }, [])
+  }, [account, library])
 
   return (
     <VStack h="100%" w="100%" alignItems="stretch">
@@ -69,7 +104,12 @@ export const Positions = (props) => {
         <VStack alignItems="stretch" w="100%" alignSelf="center">
           <StatTable
             headingRow={['Expiry', 'Strike', 'Size', 'Type']}
-            tableRows={[['0', '0', '0', '0']]}
+            tableRows={shortOptionPositions}
+            activeRow={0}
+          />
+          <StatTable
+            headingRow={['Expiry', 'Strike', 'Size', 'Type']}
+            tableRows={longOptionPositions}
             activeRow={0}
           />
         </VStack>
@@ -78,11 +118,22 @@ export const Positions = (props) => {
       {/* Perpetuals */}
       {selectedContract === 'perps' && (
         <VStack alignItems="stretch" w="100%" alignSelf="center">
-          <StatTable
-            headingRow={['Expiry', 'Strike', 'Size', 'Type']}
-            tableRows={[['0', '0', '0', '0']]}
-            activeRow={0}
-          />
+          <VStack>
+            <Box>Amount</Box>
+            <Box>{perpPosition.amount}</Box>
+          </VStack>
+          <VStack>
+            <Box>Open price</Box>
+            <Box>{perpPosition.openPrice}</Box>
+          </VStack>
+          <VStack>
+            <Box>lastUpdatedAt</Box>
+            <Box>{perpPosition.lastUpdatedAt}</Box>
+          </VStack>
+          <VStack>
+            <Box>Type</Box>
+            <Box>{perpPosition.type}</Box>
+          </VStack>
         </VStack>
       )}
     </VStack>

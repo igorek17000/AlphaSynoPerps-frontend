@@ -37,7 +37,7 @@ export const BuySellWindow = (props) => {
   const [selectedContract, setSelectedContract] = useState('options')
   const [selectedMethod, setSelectedMethod] = useState('buy')
 
-  const vaultAddress = '0x275b9fe6FFb8f619E60958aEB2CafB50e9c0745b'
+  const vaultAddress = '0xbe9854019e5EFA4109582ca7bBF003C842535D53'
 
   // options section states
   const [selectedOptionType, setSelectedOptionType] = useState('call')
